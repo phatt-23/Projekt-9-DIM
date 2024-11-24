@@ -1,0 +1,8 @@
+/home/phatt/School/3_semester/dim/project/projekt_9/program/target/debug/deps/liblazy_static_include-688d0da9fcb45540.rmeta: /home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/lib.rs /home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/macro_include_array.rs /home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/macro_include_bytes.rs /home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/macro_include_str.rs
+
+/home/phatt/School/3_semester/dim/project/projekt_9/program/target/debug/deps/lazy_static_include-688d0da9fcb45540.d: /home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/lib.rs /home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/macro_include_array.rs /home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/macro_include_bytes.rs /home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/macro_include_str.rs
+
+/home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/lib.rs:
+/home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/macro_include_array.rs:
+/home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/macro_include_bytes.rs:
+/home/phatt/.cargo/registry/src/index.crates.io-6f17d22bba15001f/lazy-static-include-3.2.1/src/macro_include_str.rs:
