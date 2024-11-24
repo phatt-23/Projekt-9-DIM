@@ -671,6 +671,7 @@ $
   = 30 + 60 + 45 + 6 = underline(underline(141))
 $
 
+#pagebreak()
 
 = Sestaveni algoritmu
 Cilem je maximalizovat $p$ tak, aby zaroven platilo, ze:
@@ -686,6 +687,117 @@ pricemz hodnoty pravdepodobnosti $P(X > Y)$
 manipulujeme vybiranim cisel
 sten kostek z mnoziny $[1,6]$ 
 (s moznosti opakovani).
+
+
+Algoritmus jsem zprvu psal v Pythonu pro jeho citelnou syntaxi.
+Beh algoritmu ale trval delsi dobu nez se mi libilo. 
+Rozhodl jsem se jej prepsat v programovacim jazyce Rust.
+
+Zakladni idea je jednoducha:
+1. #[
+  Vygeneruje vsechny ciselne kombinace pro steny kostek.
+  K vygenerovani kombinaci s opakovanim jsem vyuzil knihovny 
+  `itertools` (Rust crate) v funkci `generate_dice`.
+
+  ```rs
+  fn generate_dice(sides: usize) -> Vec<Vec<usize>> {
+      (1..=6).combinations_with_replacement(sides).collect()
+  }
+  ```
+]
++ #[
+  Vypocte probabilitu $P(X > Y)$ pro kazdou dvojici kombinaci.
+  Pro vypocet $P(X > Y)$ jsem si napsal funkci:
+
+  ```rs
+  // Compute P(X > Y).
+  fn pairwise_probability(x: &[usize], y: &[usize]) -> f64 {
+      let omega = (x.len() * y.len()) as f64;
+
+      let wins: usize = x.iter()
+                         .flat_map(|&xi| y.iter().map(move |&yi| xi > yi))
+                         .filter(|&b| b)
+                         .count();
+
+      wins as f64 / omega
+  }
+  ```
+
+]
++ #[
+  V cyklu proveri jestli pro $p$ plati ze $P(B > A) >= p, P(C > B) >= p$ a 
+  $P(A > C) > p$.
+  ```rs
+  let ba = pairwise_probability(b, a);
+  let cb = pairwise_probability(c, b);
+  let ac = pairwise_probability(a, c);
+
+  if ba >= p && cb >= p && ac >= p {
+    ... (do something)
+  }
+  ```
+]
++ #[
+  Soucasne nalezene maximalni $p$ ulozi a opakuje predchozi krok,
+  dokud stale existuji konfigurace kostek, pro ktere plati podminky. 
+  
+]
+
+#pagebreak()
+
+Zde je algoritmus (naivni varianta):
+```rs
+// Finds maximal p for which the conditions hold.
+// Doesnt use any caching mechanism.
+fn find_max_p_naive(side_count: usize) -> f64 {
+    println!("Finding maximal p:");
+    let mut max_p = 0.0;
+    let dice = generate_dice(side_count);
+    let increment = 1.0 / (side_count * side_count) as f64;
+    for step in 1..=16 {                 // Iterate from 1 to 16, 
+        let p = step as f64 * increment; // incrementing by 1/|Omega|.
+        println!("Testing for p = {}:", p);
+
+        let mut valid = false;      // No configurations for 
+                                    // current p have yet been found.
+
+        'outer:                     // Tag to jump to from within the loop.
+        // Test out every single combinations.
+        for a in &dice {
+            for b in &dice {
+                for c in &dice {
+                    // Get probabilities P(X > Y)
+                    let ba = pairwise_probability(b, a);
+                    let cb = pairwise_probability(c, b);
+                    let ac = pairwise_probability(a, c);
+
+                    // Check if P(B > A) >= p, ...
+                    if ba >= p && cb >= p && ac >= p {
+                        println!("  A = {:?}, B = {:?}, C = {:?}", a, b, c);
+                        valid = true; // This p has a valid configuration
+                        break 'outer; // Jump to the 'outer tag 
+                    }
+                }
+            }
+        }
+        
+        // If for p a configuration doesnt exist 
+        // then return the last valid p
+        if !valid {
+            println!("  No valid configurations!");
+            return max_p;
+        }
+        
+        // If configuration exists assign to max_p
+        max_p = p;
+    }
+    
+    // By default return max_p found
+    max_p
+}
+```
+
+
 
 
 

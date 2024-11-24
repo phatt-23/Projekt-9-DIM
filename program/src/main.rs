@@ -22,8 +22,8 @@ fn pairwise_probability(x: &[usize], y: &[usize]) -> f64 {
 
 // Generate all possible dice combinations 
 // for dice with provided number of sides.
-fn generate_dice(sides: usize) -> Vec<Vec<usize>> {
-    (1..=6).combinations_with_replacement(sides).collect()
+fn generate_dice(side_count: usize) -> Vec<Vec<usize>> {
+    (1..=6).combinations_with_replacement(side_count).collect()
 }
 
 
@@ -60,12 +60,12 @@ fn precompute_probabilities_vec(dice: &Vec<Vec<usize>>) -> Vec<Vec<f64>> {
 
 // Finds maximal p for which the conditions hold.
 // Doesnt use any caching mechanism.
-fn find_max_p_naive(sides: usize) -> f64 {
+fn find_max_p_naive(side_count: usize) -> f64 {
     println!("Finding maximal p:");
 
-    let dice = generate_dice(sides);
+    let dice = generate_dice(side_count);
     let mut max_p = 0.0;
-    let increment = 1.0 / (sides * sides) as f64;
+    let increment = 1.0 / (side_count * side_count) as f64;
 
     // Iterate from 1 to 16, incrementing by 1/|Omega|.
     for step in 1..=16 {
@@ -83,7 +83,7 @@ fn find_max_p_naive(sides: usize) -> f64 {
                     let cb = pairwise_probability(c, b);
                     let ac = pairwise_probability(a, c);
 
-                    if ba >= p && cb >= p && ac >= p {
+                    if ba >= p && cb >= p && ac > p {
                         println!("  A = {:?}, B = {:?}, C = {:?}", a, b, c);
                         valid = true; // This p has a valid configuration
                         break 'outer; // Jump to the 'outer tag 
@@ -109,12 +109,12 @@ fn find_max_p_naive(sides: usize) -> f64 {
 
 // Finds maximal p for which the conditions hold.
 // Uses HashMap data structure as cache.
-fn find_max_p_caching_hashmap(sides: usize) -> f64 {
+fn find_max_p_caching_hashmap(side_count: usize) -> f64 {
     println!("Finding maximal p:");
 
-    let dice = generate_dice(sides);
+    let dice = generate_dice(side_count);
     let mut max_p = 0.0;
-    let increment = 1.0 / (sides * sides) as f64;
+    let increment = 1.0 / (side_count * side_count) as f64;
 
     let cache = precompute_probabilities_hashmap(&dice);
 
@@ -133,7 +133,7 @@ fn find_max_p_caching_hashmap(sides: usize) -> f64 {
                     let cb = cache.get(&(c, b)).unwrap_or(&0.0);
                     let ac = cache.get(&(a, c)).unwrap_or(&0.0);
 
-                    if *ba >= p && *cb >= p && *ac >= p {
+                    if *ba >= p && *cb >= p && *ac > p {
                         println!("  A = {:?}, B = {:?}, C = {:?}", a, b, c);
                         valid = true;
                         break 'outer;
@@ -155,12 +155,12 @@ fn find_max_p_caching_hashmap(sides: usize) -> f64 {
 
 // Finds maximal p for which the conditions hold.
 // Uses Vec data structure as cache.
-fn find_max_p_caching_vec(sides: usize) -> f64 {
+fn find_max_p_caching_vec(side_count: usize) -> f64 {
     println!("Finding maximal p:");
 
-    let dice = generate_dice(sides);
+    let dice = generate_dice(side_count);
     let mut max_p = 0.0;
-    let increment = 1.0 / (sides * sides) as f64;
+    let increment = 1.0 / (side_count * side_count) as f64;
 
     let cache = precompute_probabilities_vec(&dice);
 
@@ -200,12 +200,12 @@ fn find_max_p_caching_vec(sides: usize) -> f64 {
 // Finds maximal p for which the conditions hold.
 // Uses Vec data structure as cache.
 // Also the iterations are done in parallel.
-fn find_max_p_parallel(sides: usize) -> f64 {
+fn find_max_p_parallel(side_count: usize) -> f64 {
     println!("Finding maximal p:");
 
-    let dice = generate_dice(sides);
+    let dice = generate_dice(side_count);
     let mut max_p = 0.0;
-    let increment = 1.0 / (sides * sides) as f64;
+    let increment = 1.0 / (side_count * side_count) as f64;
 
     let cache = precompute_probabilities_vec(&dice);
 
@@ -267,8 +267,11 @@ fn find_all_configurations(p: f64, sides: usize) -> Vec<DiceConfiguration> {
 // Find all configurations for p 
 // satifying P(B > A), P(C > B) and P(A > C).
 // Uses inefficient naive approach.
-fn find_all_configurations_naive(p: f64, sides: usize) -> Vec<DiceConfiguration> {
-    let dice = generate_dice(sides);
+fn find_all_configurations_naive(
+    p: f64, 
+    side_count: usize
+) -> Vec<DiceConfiguration> {
+    let dice = generate_dice(side_count);
     let mut configs: Vec<DiceConfiguration> = vec![];
 
     for a in &dice {
@@ -291,7 +294,7 @@ fn find_all_configurations_naive(p: f64, sides: usize) -> Vec<DiceConfiguration>
 fn log_configurations(configs: &Vec<DiceConfiguration>, p: f64) {
     println!("Valid configurations for p = {} are:", p);
     for (i, c) in configs.iter().enumerate() {
-        println!("{i}: A = {:?}, B = {:?}, C = {:?}", c.0, c.1, c.2);
+        println!("[{i}] \t A = {:?} \t B = {:?} \t C = {:?}", c.0, c.1, c.2);
     }
 }
 
@@ -371,7 +374,7 @@ fn main() {
     let args = env::args().collect_vec();
 
     let side_count = args[1].parse::<usize>()
-                            .unwrap_or_else(|_| panic!("No sides count provided"));
+                            .unwrap_or_else(|_| panic!("No side count provided"));
     
     let approach = args.get(2).map_or("all", |v| v);
 
