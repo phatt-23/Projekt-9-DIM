@@ -1,0 +1,74 @@
+
+// Mame dan graf stromu $T$ se sudym poctem vrcholu.
+// Pro strom T existuje faktor F (podgraf, obsahuje vsechny vrcholy stromu T),
+// ktery ma vsechny vrcholy licheho stupne.
+// Faktor nemusi byt souvily graf.
+//
+// Strom je souvisly acyklicky graf.
+// Kazdy vrchol ma alespon jednoho souseda.
+// Nas graf ma mit sudy pocet vrcholu.
+//
+// Pro stromy obecne plati:
+// $
+//   V(G) = n \
+//   E(G) = n - 1 \
+// $
+//
+// Princip sudosti:
+// $
+//   sum_(v in V) deg(v) = 2 |E|
+// $
+//
+// Pro stromy plati:
+// $
+//   sum_(v in V) deg(v) = 2 (n - 1)
+// $
+//
+// Havel-Hakimi teorem:
+// $
+//   deg(v_i) = d_i \
+//   (d_1 >= d_2 >= ... >= d_n) \
+//   (d_1 , d_2, ..., d_n)
+// $
+//
+// Soucet vsech stupni vrcholu budeme brat jako kulicky, 
+// ktere umistujeme do skatulek reprezentujici vrcholy.
+// Mame $2(n - 1) = 2n - 2$ kulicek a $n$ skatulek. 
+// Kazda skatulka musi alespon jednu kulicku, 
+// kvuli souvislosti grafu. 
+// Zbyva nam $n - 2$ kulicek, 
+// ktere musime rozmistit do $n$ skatulek.
+//
+// At uz kulicky rozmistime jakkoliv, 
+// vzdy nam vyjde posloupnost, 
+// kde jsou vsechny cisla licha.
+// Nebo posloupnost se sudym poctem 
+// sudych stupni. 
+// Jine posloupnosti pro grafy se sudym 
+// poctem vrcholu neexistuji.
+//
+// Mame-li posloupnost seskladanou z lichych cisel,
+// tak faktorem $F$ grafu $G$ je samotny graf $G$.
+// Je to take jediny graf, ktery splnuje vlastnosti faktoru $F$.
+// Pokud bychom se posloupnost snazili nejak modifikovat,
+// tak jedine mozne modifikace, ktera smime provest
+// jsou:
+// - #[
+//   dekrememtace hodnoty stupne na dvou vrcholech
+//   (ze dvou skatulek odebereme kulicku),
+// ]
+// - na vrcholy stupne rovno 1 nesmime sahat,
+// - nemuzeme hodnoty inkrementovat.
+// Upravu lze udelat jen jednu.
+//
+// Vysledna posloupnost musi byt z lichych cisel.
+//
+// V kazdem grafu je pocet vrcholu licheho stupne sudy.
+//
+//
+//
+//
+//
+//
+//
+//
