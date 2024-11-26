@@ -18,13 +18,13 @@
   zebra-fill: luma(248),
 )
 
-#show raw: set text(font: "CaskaydiaCove NF", size: 8pt)
+#show raw: set text(font: "JetBrainsMonoNL NF", size: 8pt)
 
 #set text(
   lang: "cs",
   // font: "New Computer Modern",
-  font: "Latin Modern Sans",
-  // font: "Latin Modern Roman",
+  // font: "Latin Modern Sans",
+  font: "Latin Modern Roman",
   size: 12pt,
 )
 
@@ -740,12 +740,12 @@ Zakladni idea je jednoducha:
   ```rust
   // Compute P(X > Y).
   fn pairwise_probability(x: &[usize], y: &[usize]) -> f64 {
-      let wins: usize = x.iter()
+      let wins: usize = x.iter()              // Get the count of events where x > y
                          .flat_map(|&xi| y.iter().map(move |&yi| xi > yi))
                          .filter(|&b| b)
                          .count();
-      let omega = (x.len() * y.len()) as f64;
-      wins as f64 / omega
+      let omega = (x.len() * y.len()) as f64; // Size of the probability space
+      wins as f64 / omega                     // Return probability
   }
   ```
 
@@ -754,11 +754,10 @@ Zakladni idea je jednoducha:
   V cyklu proveri jestli pro $p$ plati ze $P(B > A) >= p, P(C > B) >= p$ a 
   $P(A > C) > p$.
   ```rust
-  let ba = pairwise_probability(b, a);
-  let cb = pairwise_probability(c, b);
-  let ac = pairwise_probability(a, c);
-
-  if ba >= p && cb >= p && ac >= p {
+  let ba = pairwise_probability(b, a);      // P(B > A)
+  let cb = pairwise_probability(c, b);      // P(C > B)
+  let ac = pairwise_probability(a, c);      // P(A > C)
+  if ba >= p && cb >= p && ac >= p {        // Check them against p
     ... (do something)
   }
   ```
@@ -778,25 +777,23 @@ Zde je algoritmus (naivni varianta):
 // Doesnt use any caching mechanism.
 fn find_max_p_naive(side_count: usize) -> f64 {
     println!("Finding maximal p:");
-
-    let mut max_p = 0.0;
-    let dice = generate_dice(side_count);
-    let increment = 1.0 / (side_count * side_count) as f64;
-
+    let mut max_p = 0.0;                      // Holds the maximum p.
+    let dice = generate_dice(side_count);     // Create all the dice combinations.
+    let increment = 1.0 / (side_count * side_count) as f64; // Probability can grow 
+                                                            // only by this margin
     for step in 1..=16 {                      // Iterate from 1 to 16, 
         let p = step as f64 * increment;      // incrementing by 1/|Omega|.
         let mut valid = false;                // No configurations for 
                                               // current p have yet been found.
         println!("Testing for p = {}:", p);
         'outer:                               // Tag to jump to from within the loop.
-        for a in &dice {                      // Test out every single combinations.
+        for a in &dice {                      // Test out every single combination.
             for b in &dice {
                 for c in &dice {
-                    let ba = pairwise_probability(b, a); // Get the probabilities
-                    let cb = pairwise_probability(c, b); // of P(B > A), P(C > B) ...
+                    let ba = pairwise_probability(b, a);  // Get the probabilities
+                    let cb = pairwise_probability(c, b);  // of P(B > A), P(C > B) ...
                     let ac = pairwise_probability(a, c);
-                    // Check if P(B > A) >= p, ...
-                    if ba >= p && cb >= p && ac >= p {
+                    if ba >= p && cb >= p && ac >= p {    // Check them against p
                         println!("A={:?}, B={:?}, C={:?}", a, b, c);
                         valid = true; // This p has a valid configuration.
                         break 'outer; // Jump to the 'outer tag.
@@ -804,24 +801,20 @@ fn find_max_p_naive(side_count: usize) -> f64 {
                 }
             }
         }
-        // If for current p configuration doesnt exist,
-        // then return the last valid p.
-        if !valid {
-            println!("No valid configurations!");
-            return max_p;
+        if !valid {                               // If for current p configuration 
+            println!("No valid configurations!"); // doesnt exist, then return the 
+            return max_p;                         // last valid p.
         }
-        // If configuration exists assign to max_p.
-        max_p = p;
+        max_p = p;                    // If configuration exists assign to max_p.
     }
-    // By default return max_p found.
-    max_p
+    max_p                             // By default return max_p found.
 }
 ```
 Tento algoritmus je vsak velmi neefektvni. Hodnotu probabilit mezi kostkami
 pocita neustale znova a znova. Pocita i ty hodnoty co uz byly vypocteny.
 V dusledku je tento alogitmus velmi pomaly.
 
-Je tedy jednoznacne, ze algoritmu chybi cache system.
+Je jednoznacne, ze algoritmu chybi cache system.
 Vypoctene hodnoty ulozime do nejake datove struktury (kolekce).
 Pokud bychom implementovali cache system, algoritmus by
 mohl vyuzit toho, ze hodnota, ktera uz byla vypoctena,
@@ -1232,54 +1225,5 @@ $
 
 Došli jsme k závěru, že pro strom sudého řádu 
 existuje právě jeden lichý faktor. #h(1fr) $ballot$
-
-
-
-
-
-
-// Ukažme si i konkretní případ. Mějme strom se 14 vrcholy.
-//
-// #figure(
-//   diagraph.raw-render(```
-//     graph {
-//       layout=sfdp;
-//       rankdir=LR;
-//       labelloc=b;
-//       fontsize=14;
-//       node[shape=circle];
-//       1 -- 3;
-//       2 -- 3;
-//       3 -- 6;
-//       9 -- 8;
-//       11 -- 8;
-//       12 -- 8;
-//       8 -- 6;
-//       5 -- 4;
-//       4 -- 6;
-//       14 -- 13;
-//       13 -- 10; 
-//       10 -- 7;
-//       7 -- 6;
-//     }
-//   ```),
-//   caption: [Strom se 14 vrcholy]
-// )
-
-// Jelikoz $|V(T)|$ je sude,
-// tak aby nebyl porusen princip sudosti
-// (Handshaking Lemma), 
-// musi stupnova posloupnost $T$ 
-// obsahovat sudy pocet sudych stupni 
-// a lichych stupni.
-//
-// Mame-li graf s $n = 2k, k in ZZ$ 
-// vrcholy, stupnova posloupnost bude
-// vypadat takto:
-// $
-//   (d_1, d_2, ..., d_n) \
-//   ("licha", "suda", "licha", "licha", ...,"suda") \
-//
-// $
 
 
