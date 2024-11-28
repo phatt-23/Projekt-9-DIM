@@ -182,39 +182,6 @@ nebo stručněji:
 )
 
 Pokud je hrana $e$ obsažena v obou faktorech, tak se vyruší.
-Pokud je obsažena pouze v jednom, tak se s ní počítá.
-Pro vrchol $v in V(F_1 Delta F_2)$ jeho stupeň $deg_(F_1 Delta F_2)(v)$ je rozhodnuta
-počtem všech incidentních hran $e$, které náleží právě jednomu z faktoru.
-Jestliže se $e$ objevuje právě v jednom faktoru, kontribujuje stupni vrcholu $v$
-jednou (+1). 
-Pokud se objevuje v obou faktorech, tak stupni nekontribujuje.
-Důležité však je, že nás zajímá pouze sudost nebo lichost tohoto stupně.
-// Graf $F_1 Delta F_2$ obsahuje pouzy ty hrany, 
-// které jsou právě v jednom z faktoru $F_1$ a $F_2$.
-
-O faktorech $F_1$ a $F_2$ víme, 
-že jsou jejich vrcholové stupně jsou všechny liché.
-$
-  forall v in F_1, deg(v) equiv 0 quad
-  forall v in F_2, deg(v) equiv 0 space (mod 2)
-$
-
-Je zřejmé, že je-li $F_1 Delta F_2$ nulový graf (graf bez hran),
-tak jsou faktory $F_1$ a $F_2$ stejné.
-$
-  F_1 Delta F_2 = emptyset <=> F_1 = F_2  
-$
-
-Jak to bude vypadat se sudosit a lichosti vrcholů 
-symetrické diference $F_1 Delta F_2$?
-
-
-Vyberme si libovolný vrchol $v$ z grafu $T$.
-
-Pokud se žádné hrany incidentní s $v$ v $F_1$ 
-(označme $E_(F_1)^v$ jako množinu hran grafu $F_1$ incidentních s vrcholem $v$)
-neobjevují v $F_2$, 
-potom všechny hrany v $E_(F_1)^v$ zahrneme do $F_1 Delta F_2$, 
 přičemž zahrneme všechny hrany incidentní s $v$ v $F_2$ ($E_(F_2)^v$). 
 Obou jich je lichý počet, proto stupeň vrcholu $v$ je sudý. Tedy:  
 $

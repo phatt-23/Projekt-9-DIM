@@ -11,8 +11,14 @@
   ],
 )
 
-= Combinatorics
-Let there be four-sided dice $A, B$ and $C$ and with numbers defined as:
+= Kombinatorika
+
+== Formulace a popis úloh
+Nechť máme tři čtyřstenné kostky $A$, $B$ a $C$,
+jejíchž čísla na stěnnách jsou definovaná množinami takto:
+
+// Let there be four-sided dice 
+// $A, B$ and $C$ and with numbers defined as:
 
 $
   A = {1,4,4,4} \
@@ -20,70 +26,198 @@ $
   C = {3,3,3,6}. \
 $
 
-Given two dice $X$ and $Y$, 
-when we throw them simultaneously 
-and observe the number,
-we say X is better than Y 
-if and only if X has a higher
-probability of having a greater 
-number than Y. 
-In other words X wins over Y and 
-we denote this as $P(X > Y)$,
-the probability of $X$ winning over $Y$.
+Zvolme si dvě kostky $X$, $Y$ a hoďme s nimi.
+Když jsou kostky vrženy současně, 
+řekneme, že kostka $X$ je lepší než kostka $Y$,
+pokud pravděpodobnost, 
+že hodnota na kostce $X$ bude vyšší 
+než hodnota na kostce $Y$, je větší než $50%$.
 
-Prove that $P(B > A)$, $P(C > B)$ and $P(A > C)$.
+Tuto skutečnost zapíšeme jako $X>Y$.
+Pravděpodobnost výhry kostky $X$ nad kostkou $Y$
+označíme potom jako $P(X > Y)$.
 
-== Proof of $P(B > A)$
-=== First solution
-The sample space $Omega$ is every combination of B's numbers with A's numbers.
+Úlohy jsou následující:
+
+1. #[ 
+  *Prokázání netranzitivity*
+
+  První úkolem je ukázat, že vztahy mezi kostkami nejsou tranzitivní, 
+  to znamená, že vztahy mezi kostkami jsou tzv. cyklické @intransitivity. 
+  Tvrdíme totiž, že platí $B > A$, $C > B$ a současně $A > C$.
+  To znamená, že žádná kostka není "nejlepší" ve všech případech. 
+
+  Pro každou dvojici kostek vypočítáme pravděpodobnost vítězství jedné 
+  kostky nad druhou, konkrétně $P(B>A)$, $P(C>B)$ a $P(A>C)$, a ověříme, 
+  že všechny tyto pravděpodobnosti jsou větší než $1/2$.
+]
+
++ #[ 
+  *Kombinatorická analýza možných konfigurací*
+
+  V druhém úkolu máme stanovit celkový počet možných
+  konfigurací čísel tří kostek.
+  Čísla na stěny kostek vybíráme 
+  z množiny $[1,6]$, přičemž se čísla 
+  mohou opakovat. Navíc jsou kostky jsou 
+  rozlišitelné (např. barvou) a nezáleží 
+  na pořadí čísel, např. ${1,4,4,4}$ a ${4,4,4,1}$
+  považujeme za stejné.
+]
+
++ #[ 
+  *Maximalizace pravděpodobností*
+
+  Poslední úloha spočívá v nalezení 
+  největší hodnoty parametru $p$ při volné 
+  konfiguraci čísel na kostkách,
+  přičemž parametr $p$ musí splňovat:
+
+  $
+    P(B>A) >= p space and space
+    P(C>B) >= p space and space
+    P(A>C) > p.
+  $
+
+  To vyžaduje navržení algoritmu, 
+  který systematicky prověří všechny možné 
+  konfigurace čísel na kostkách, vypočítá 
+  odpovídající pravděpodobnosti a maximalizuje $p$.  
+]
+
+
+
+// Given two dice $X$ and $Y$, 
+// when we throw them simultaneously 
+// and observe the number,
+// we say X is better than Y 
+// if and only if X has a higher
+// probability of having a greater 
+// number than Y. 
+// In other words X wins over Y and 
+// we denote this as $P(X > Y)$,
+// the probability of $X$ winning over $Y$.
+
+#pagebreak()
+
+// Prove that $P(B > A)$, $P(C > B)$ and $P(A > C)$.
+== Netrazitivita kostek
+
+// Pro pripomenuti
+Cílem této části je analyzovat vlastnosti tří čtyřstěnných kostek 
+$A$, $B$ a $C$ a ukázat, že vykazují netranzitivní chování. 
+To znamená, že pravděpodobnosti výhry při "souboji" mezi 
+jednotlivými kostkami splňují vztahy:
+$
+  &P(B > A) > 0.5, \
+  &P(C > B) > 0.5 \
+  "a" space &P(A > C) > 0.5. 
+$
+
+Pro každý pár kostek $X$ a $Y$ definujeme pravděpodobnost $P(X > Y)$ 
+jako pravděpodobnost, že při hodu kostkami $X$ a $Y$ padne na kostce $X$ vyšší číslo než na kostce $Y$. 
+
+Každá kostka má čtyři stěny, takže celkový 
+počet možných kombinací výsledků
+při "souboji" dvou kostek je $4 dot 4 = 16$, 
+což odpovídá mohutnosti množiny
+kartezského součinu $X times Y$ kostek $X$ a $Y$.
+
+Tato pravděpodobnost se vypočítá jako:  
+$
+  P(X > Y) = ("počet případů, kdy číslo na" X "je větší než číslo na" Y)
+    / ("celkový počet možných kombinací výsledků"),
+$
+stručně:
+$
+  P(X > Y) = (lr(|{ (x,y) in X times Y : x > y }|, size: #150%))/(|X times Y|).
+$
+
+
+V této části postupně určíme pravděpodobnosti 
+$P(B > A)$, $P(C > B)$ a $P(A > C)$.
+
+=== Výpočet $P(B > A)$
+
+*První varianta řešení* \
+Pravděpodobnostní prostor $Omega_(B,A)$ 
+je kartezský součin čísel na kostkách $B$ a $A$:
+// The sample space $Omega$ is every combination of B's numbers with A's numbers.
 
 $
-  Omega_(B,A) = lr([ {a,b} : b in B, a in A ], 
-  size: #150%) \
+  B = {2,2,5,5}, quad
+  A = {1,4,4,4}, quad
+  Omega_(B,A) = lr({ (b,a) : b in B, a in A }, 
+  size: #150%) <=> B times A, quad
 $
+#set highlight(fill: rgb("c7f0c9"))
 $
-  Omega_(B,A) = lr([
-    &{2,1}, {2,1}, {5,1}, {5,1}, \
-    &{2,4}, {2,4}, {5,4}, {5,4}, \
-    &{2,4}, {2,4}, {5,4}, {5,4}, \
-    &{2,4}, {2,4}, {5,4}, {5,4}
-  ], size: #150%) \
+  Omega_(B,A) = lr({
+    &#highlight[(2,1), (2,1), (5,1), (5,1)], \
+    &(2,4), (2,4), #highlight[(5,4), (5,4)], \
+    &(2,4), (2,4), #highlight[(5,4), (5,4)], \
+    &(2,4), (2,4), #highlight[(5,4), (5,4)]
+  }, size: #150%). \
 $
 
-The size of the space is $|Omega| = 16$. 
-From the expanded $Omega$ we see that clearly
-the the number of events where
-B wins is higher than the number of 
-events in which it loses.
-That is:
+// The size of the space is $|Omega| = 16$. 
+// From the expanded $Omega$ we see that clearly
+// the the number of events where
+// B wins is higher than the number of 
+// events in which it loses.
+// That is:
 
+Velikost pravděpodobnostního prostoru je $|Omega| = 16$. 
+Z rozepsané $Omega$ vidíme, že
+počet případů, kdy kostka $B$ vyhraje 
+nad $A$ je vyšší než počet, kdy prohraje.
+Pravděpodobnost vypočteme jako:
 $
   P(B > A) = (2 + 4 dot 2)/(|Omega|) 
            = 10/16 = 0.625.
 $
 
-We see that B's chance of winning is 
-62.5% which is higher than 50% meaning 
-it's better. $ballot$
+// We see that B's chance of winning is 
+// 62.5% which is higher than 50% meaning 
+// it's better. 
+Vidíme, že pravděpodobnost výhry kostky $B$ nad kostkou $A$
+je vyšší než $50%$. To znamená, že kostka $B$ je lepší než $A$.
+#h(1fr) $ballot$
 
-=== Second solution 
-Sample space is still the same $Omega$.
-If A is 1, B wins no matter what.
-If A is 4, B wins if 5 is thrown.
-$
-  A &= 1": " B "wins in all 4 cases"  
-      & -> & 4 "events"\
-  A &= 4": " B "wins, if it's 5 (2 of 4 cases)" 
-      & -> & 6 "events"\
-$
+// === Second solution 
+=== Druhá varianta řešení
+// Sample space is still the same $Omega$.
+// If A is 1, B wins no matter what.
+// If A is 4, B wins if 5 is thrown.
+Pravděpodobnostní prostorem je stále $Omega_(B,A)$.
+Využijeme toho, že se kostky skládají
+z dvou různých čísel.
+Pokud hodnota kostky $A$ je 1, 
+tak kostka $B$ vyhraje vždy a to 
+bez ohledu na na její hozenou hodnotu.
+Pokud padla na kostce $A$ hodnota 4, 
+tak $B$ vyhraje pouze tehdy, 
+když byla vržena hodnota $5$.
+// $
+//   A &= 1": " B "wins in all 4 cases"  
+//       & -> & 4 "events"\
+//   A &= 4": " B "wins, if it's 5 (2 of 4 cases)" 
+//       & -> & 6 "events"\
+// $
+// $
+//   "pokud" A &= 1", " B "vyhraje ve všech případech"  
+//       & -> & 4 "případů"\
+//   "pokud" A &= 4": " B "vyhrává, padne-li 5 (polovina )" 
+//       & -> & 6 "events"\
+// $
 
-The reason behind the numbers: 
+// The reason behind the numbers: 
 
-- #[
-$P_(Omega)(A=1) = 1/4$ which then means that
-number of events where $A=1$ is $1/4|Omega|=4$.
-B wins in all of them.
-]
+// - #[
+//   $P_(Omega)(A=1) = 1/4$ which then means that
+//   number of events where $A=1$ is $1/4|Omega|=4$.
+//   B wins in all of them.
+// ]
 
 // $
 //   P(B|A = 1) = (P(A = 1|B) dot P(B))/(P(A = 1))
@@ -91,22 +225,35 @@ B wins in all of them.
 //     = 1/4 dot 4/1 = 1
 // $
 
-- #[
-$P_(Omega)(not A=1) = 3/4$ meaning the number of
-events where $not (A=1)$ is $3/4|Omega|=12$ 
-or one could say $3 dot 4 = 12$ (three non-1s times 
-zipped with elements from dice $B$). 
-Out of the 12 cases, 
-in half of them $A$ is winning and 
-in the other half $B$ is winning. 
-That is there are 6 events where $B$ winning
-when A is not 1.
-]
-
+// - #[
+//  $P_(Omega)(not A=1) = 3/4$ meaning the number of
+//  events where $not (A=1)$ is $3/4|Omega|=12$ 
+//  or one could say $3 dot 4 = 12$ (three non-1s times 
+//  zipped with elements from dice $B$). 
+//  Out of the 12 cases, 
+//  in half of them $A$ is winning and 
+//  in the other half $B$ is winning. 
+//  That is there are 6 events where $B$ winning
+//  when A is not 1.
+// ]
 $
-  P(B > A) = (4 + 6)/(|Omega|)
-           = 10/16 = 0.625.
+  P(B > A) &= 
+    (P(A=1) dot P(B) dot |Omega_(B,A)| 
+   + P(A=4) dot P(B=5) dot |Omega_(B,A)|)
+    / (|Omega_(B,A)|) \
+  P(B > A) &= P(A=1) dot P(B)  
+            + P(A=4) dot P(B=5) \
+  P(B > A) &= 1/4 dot 1 + 3/4 dot 1/2 = 1/4 + 3/8 = 5/8 = underline(0.625) \
 $
+// $
+//   P(B > A) &= 
+//     (P_(Omega_(B,A))(A=1) dot P_(Omega_(B,A))(B) dot |Omega_(B,A)| 
+//    + P_(Omega_(B,A))(A=4) dot P_(Omega_(B,A))(B=5) dot |Omega_(B,A)|)
+//     / (|Omega_(B,A)|) \
+//   P(B > A) &= P_(Omega_(B,A))(A=1) dot P_(Omega_(B,A))(B)  
+//             + P_(Omega_(B,A))(A=4) dot P_(Omega_(B,A))(B=5) \
+//   P(B > A) &= 1/4 dot 1 + 3/4 dot 1/2 = 1/4 + 3/8 = 5/8 = underline(0.625) \
+// $
 
 // === Comparison with the Bayesian Theorem
 // $
@@ -116,31 +263,32 @@ $
 //   P(X > Y) = (P(X > Y = y))/(|Omega_(X,Y)|)
 // $
 
-P(B > A) is greater then $1/2$,
-therefore B is better than A. $ballot$
+// $P(B > A)$ is greater then $1/2$,
+// therefore $B$ is better than $A$. $ballot$
+$P(B > A) = 5/8 > 1/2$, proto kostka $B$ je lepší než $A$. #h(1fr) $ballot$
 
 
-The remaining $P(C > B)$ and $P(A > C)$ can be done analogously.
+// The remaining $P(C > B)$ and $P(A > C)$ can be done analogously.
+Zbývalé pravděpodobnosti $P(C > B)$ a $P(A > C)$ lze udělat obdobně.
 
-== Proof of $P(C > B)$
-=== Solution
-Dice C and B are defined as:
+=== Výpočet $P(C > B)$
+// === Solution
+// Dice C and B are defined as:
 $
-  B = {2,2,5,5} \
-  C = {3,3,3,6}. \
+  C = {3,3,3,6}, quad
+  B = {2,2,5,5}, quad 
+  Omega_(C,B) = lr({ (c,b) : c in C, b in B }, size: #150%)
+// $
+// The sample space here is:
+// $
 $
-The sample space here is:
 $
-  Omega_(C,B) = lr([ {c,b} : c in C, b in B ],
-  size: #150%)
-$
-$
-  Omega_(C,B) = lr([
-    & {3,2}, {3,2}, {3,5}, {6,5}, \
-    & {3,2}, {3,2}, {3,5}, {6,5}, \
-    & {3,2}, {3,2}, {3,5}, {6,5}, \
-    & {3,2}, {3,2}, {3,5}, {6,5}
-  ], size: #150%).
+  Omega_(C,B) = lr({
+    & (3,2), (3,2), (3,5), (6,5), \
+    & (3,2), (3,2), (3,5), (6,5), \
+    & (3,2), (3,2), (3,5), (6,5), \
+    & (3,2), (3,2), (3,5), (6,5)
+  }, size: #150%).
 $
 
 If $C=3$, then B will win $1/2$ of a time, 
@@ -243,42 +391,43 @@ $
 A is better than C. $ballot$
 
 
-== Vypocet pomoci zakonu celkove pravdepodobnosti 
-From the solved probabilities, we can now come up with a general
-form for this probability. Let there be probabilistically 
-observable objects $A$ and $B$ whose events can be ordered.
+== Vypočet pomoci zákonu celkové pravděpodobnosti 
+// From the solved probabilities, we can now come up with a general
+// form for this probability. Let there be probabilistically 
+// observable objects $A$ and $B$ whose events can be ordered.
 
-=== Zakon celkove pravdepodobnosti
+Zákon celkové pravděpodobnosti
 #link("https://en.wikipedia.org/wiki/Law_of_total_probability?useskin=vector")[(zdroj)]
-Mame-li udalost E, ktera zavisi na podminkach,
-tak jeji pravdepodobnost lze vyjadrit jako:
+říká, že mame-li událost $E$, která závisí 
+na známých podmínkách, tak její pravděpodobnost 
+lze vyjádřit jako
 $
-  P(E) = sum_(i=0)^n P(C_i) dot P(E|C_i)
+  P(E) = sum_(i=0)^n P(C_i) dot P(E|C_i),
 $
-kde $C_i$ jsou disjunktni podminky a pokryvaji cely 
-pravdepodobnostni prostor $Omega$, tedy:
+kde $C_i$ jsou disjunktní podmínky a pokrývají celý 
+pravdepodobnostní prostor $Omega$, tedy
 $
   union.big_(i=0)^n C_i = Omega.
 $
-
-V nasem pripade jsou udalostmi $X > Y$ (kostka X vyhraje nad Y).
-Disjunktnim podminkam $C_i$ odpovidaji vysledky hodu kostky $Y$,
-ktera muze nabyvat hodnoty $y_0, y_1, ..., y_n$.
-Podminky jsou disjunktni $Y=y_i$, 
-proto plati ze:
+Událostmi jsou v našem případě  $X > Y$ (kostka $X$ vyhraje nad $Y$).
+Disjunktní podmínky $C_i$ odpovídají výsledkům hodů kostky $Y$,
+která může nabývat hodnot $y_0, y_1, ..., y_n$.
+Podmínky $Y=y_i$ jsou disjunktní, proto platí
 $
-  union.big_(i=0)^n (Y=y_i) = Omega_(X Y)
+  union.big_(i=0)^n (Y=y_i) = Omega_(X Y).
 $
-Padne-li napr. $Y=1$ nemuze zaroven padnout $Y=3$ nebo $Y=5$ apod.
-Obecny vzorec pro pravdepodobnost $P(X>Y)$ je:
+Padne-li na kostce $Y$ např. 1 nemůže zároveň padnout 3 nebo 5 apod.
+Obecný vzorec pro výpočet pravděpodobnosti $P(X>Y)$ je
 $
-  P(X > Y) = sum_(y in Y) P(Y = y) dot P(X > y)
+  P(X > Y) = sum_(y in Y) P(Y = y) dot P(X > y).
 $
 
 === Aplikace vzorce na $P(B > A)$, $P(C > B)$ a $P(A > C)$
+Pro připomenutí:
 $
-  A = {1,4,4,4}, quad B = {2,2,5,5}, quad C = {3,3,3,6}
+  A = {1,4,4,4}, quad B = {2,2,5,5}, quad C = {3,3,3,6}.
 $
+Výpočty pravděpodobností pomocí odvozeného vzorce:
 $
   P(B > A) &= sum_(a in A) P(A = a) dot P(B > a) =\
     &= P(A=1) dot P(B>1) + P(A=4) dot P(B>4)  =\
@@ -297,46 +446,96 @@ $
     &= 3/4 dot 3/4 + 1/4 dot 0/4 
     = 9/16 = underline(underline(0.5625))\
 $
-Dosli jsme ke stejnym vysledkum.
+Došli jsme ke stejným vysledkům.
 
 
-== Ruzne rozmisteni cisel
-Kostky A, B a C maji ruzne barvy. Kolik existuje ruznych rozmisteni cisel 
-z mnoziny $[1,6]$ (s opakovanim).
+== Různé rozmístění čísel na kostkách
+Kostky $A$, $B$ a $C$ jsou rozlišitelné, např. mají jiné barvy. 
+Kolik existuje různých konfigurací čísel, když čísla vybíráme
+z množiny $[1,6]$ s možností opakovaní.
 
-Rozmisteni muzeme reprezentovat jako mnozinu cisel, 
-ve ktere pripoustime opakovani.
-Kostka ja ctyrstenna, to znamena, ze ne kazda posloupnost 
-popisuje jine rozmisteni cisel. 
+// Rozmístění můžeme reprezentovat jako mnozinu cisel, 
+// ve ktere pripoustime opakovani.
+// Kostka ja ctyrstenna, to znamena, ze ne kazda posloupnost 
+// popisuje jine rozmisteni cisel. 
 
-Zpusobu jak vybrat 4krat z sesti cisel je:
+Zpusobů jak vybrat čtyři čísla z sešti (s možností opakování) je
 $
   C^*(6,4) = binom(9,4) = 126.
 $
-Ruznych prvku z sesti moznosti bud vybereme jeden, dva, tri nebo ctyri.
-Kombinaci s opakovanim muzeme prepsat jako:
+
+*Jiná úvaha*
+
+Různých čísel vybereme buď jeden, dva, tři nebo čtyři.
+Původní kombinací s opakovanim můžeme přepsat na
+// $
+//   underbracket(
+//     binom(6,4)binom(3,3),
+//     #[vybereme 4 čísla z 6 a vybereme 3 pozice ze 3, kam umístit 3 z nich, poslední pozice je dána jednoznačně]
+//   )
+//   + underbracket(
+//     binom(6,3)binom(3,2),
+//     #[vybereme 3 čísla a vybereme 2 pozice ze 3, kam umístit 2 z nich (různá čísla), poslední pozice naplníme]
+//   )
+//   + underbracket(
+//     binom(6,2)binom(3,1),
+//     #[vybereme 2 čísla z 6 a vybereme 1 pozice ze 3, kam je umístit jednu z nich, poslední pozice jsou dány jednoznačně]
+//   )
+//     + underbracket(
+//     binom(6,1)binom(3,0),
+//     #[vybereme 1 číslo z 6, pozice jsou dáný jednoznačně]
+//   )
+// $
 $
-  underbracket(
-    binom(6,4), 
-    #[4 ruzna cisla, \ jednina mozna \ distribuce je $|(1,1,1,1)|=1$]
-  )
-  + underbracket(
-    binom(6,3)binom(3,1), 
-    #[3 ruzna cisla, \ mozne konfigurace jsou \ $|(2,1,1),(1,2,1),(1,1,2)| = 3$]
-  )
-  + underbracket(
-    binom(6,2)binom(3,1), 
-    #[
-      2 ruzna cisla, \ mozne distribuce jsou \
-      $|(3,1),(2,2),(1,3)|=3$
-    ]
-  )
-  + underbracket(
-    binom(6,1), 
-    #[ 1 cislo, \ jednina mozna \ distribuce je $|(4)| = 1$ ]
-  )
-  = 126
+  underbracket(binom(6,4)binom(3,3), #[a])
+  + underbracket(binom(6,3)binom(3,2), #[b])
+  + underbracket(binom(6,2)binom(3,1), #[c])
+  + underbracket(binom(6,1)binom(3,0), #[d]) = 126
 $
+
+#enum(numbering: "a)",
+  enum.item(1)[
+    Vybereme různá 4 čísla z 6 a vybereme 3 pozice 
+    ze 3, kam umístit 3 z nich, poslední pozice 
+    je dána jednoznačně.
+  ],
+  enum.item(2)[
+    Vybereme 3 čísla a vybereme 2 pozice ze 3, 
+    kam umístit 2 z nich (různá čísla), poslední 
+    pozice naplníme čísly, které se objevují dvákrát.
+  ],
+  enum.item(3)[
+    Vybereme 2 čísla z 6 a vybereme 1 pozice ze 3, 
+    kam je umístit jednu z nich, poslední pozice 
+    jsou dány jednoznačně.
+  ],
+  enum.item(4)[
+    Vybereme 1 číslo z 6, pozice jsou dáný jednoznačně.
+  ],
+)
+
+// $
+//   underbracket(
+//     binom(6,4), 
+//     #[4 různá čísla, \ jediná možná \ distribuce je $(1,1,1,1)$]
+//   )
+//   + underbracket(
+//     binom(6,3)binom(3,1), 
+//     #[3 různá čísla, \ možné konfigurace jsou \ $(2,1,1),(1,2,1),(1,1,2)$]
+//   )
+//   + underbracket(
+//     binom(6,2)binom(3,1), 
+//     #[
+//       2 různá čisla, \ možné distribuce jsou \
+//       $(3,1),(2,2),(1,3)$
+//     ]
+//   )
+//   + underbracket(
+//     binom(6,1), 
+//     #[ 1 číslo, \ jedniná možná \ distribuce je $(4)$ ]
+//   )
+//   = 126
+// $
 
 Nesmime vsak zapomenout ze pro ctyrstennou kostku plati, 
 ze mame-li 4 ruzna cisla, tak je jsme na kostku schopni

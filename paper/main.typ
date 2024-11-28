@@ -25,13 +25,12 @@
   // font: "Latin Modern Roman",
   size: 12pt,
 )
+#set page(paper: "us-letter")
 
 #include "./title.typ"
 
 // Setting Up Paper
-#set heading(numbering: "1.")
 #set page(
-  paper: "us-letter",
   fill: none,
   margin: (
     left: 1.2in, 
@@ -40,7 +39,7 @@
   ),
   footer: context
   [
-    Diskrétní matematika -- semestrální projekt
+    Diskrétní matematika -- Semestrální projekt
     #h(1fr)
     #counter(page).display(
       "1/1",
@@ -49,10 +48,19 @@
   ],
 )
 
+
+#set heading(numbering: "1.")
+
 #set par(
   justify: true,
   first-line-indent: 1em,
   linebreaks: "optimized",
+)
+
+#set page(
+  header: align(right)[
+    Kombinatorika a Teorie Grafů: Analýza kostek a faktorů stromů
+  ],
 )
 
 // Abstract
@@ -62,17 +70,62 @@
   clearance: 2em,
 )[
   #par(justify: false)[
-      #text([*Abstrakt*], size: 14pt) \
-      #lorem(100) 
+    #text([*Abstrakt*], size: 14pt) \
+    Tato práce se zaměřuje na dvě matematické úlohy 
+    z oblasti kombinatoriky a teorie grafů. 
+    První část se věnuje analýze netranzitivních 
+    vlastností čtyřstěnných kostek a výpočtu 
+    pravděpodobností jejich vzájemných vítězství. 
+    Navíc zkoumá celkový počet možných konfigurací 
+    čísel na kostkách a při daných pravidlech 
+    maximalizuje pravděpodobnotí jejich vztahů. 
+    Druhá část se zabývá důkazem existence jednoznačného 
+    faktoru ve stromech se sudým počtem vrcholů, 
+    kde všechny vrcholy faktoru mají lichý stupeň. 
   ]
 ]
 // Outline
-#v(3em)
+
 #outline()
 
-// Combinatorics
-#include "./combinatorics.typ"
 #pagebreak()
+
+= Úvod
+
+V této práci se zaměřuji
+na dvě konkrétní úlohy. 
+První úloha pojednává o
+na kombinatorických vlastnostech
+netranzitivních kostek, které 
+vykazují překvapivé neintuitivní 
+pravděpodobnostní vztahy.
+Druhá úloha pochází z 
+oblasti teorie grafů.
+Zabývá se faktory 
+stromů se sudým počtem vrcholů 
+a hledáním jednoznačného faktoru 
+s lichými stupni vrcholů. 
+
+Kombinatorická část práce se zabývá 
+výpočty pravděpodobností mezi kostkami,
+rozmístěními čísel na kostkách
+a maximalizací pravděpodobnostní 
+hranice při splnění daných podmínek. 
+
+V části teorie grafů se pak 
+zabývám důkazem existence 
+faktoru s lichými stupněmi 
+ve stromech se 
+sudým počtem vrchlů.
+Dokážu také jednoznačnost tohoto faktoru.
+
+
+// Combinatorics
+#include "./combinatorics/combinatorics.typ"
+
+#pagebreak()
+
 // Graph Theory
 #include "./graph_theory.typ"
 
+#bibliography("combinatorics/bibl.yml")
