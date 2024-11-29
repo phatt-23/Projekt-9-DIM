@@ -137,3 +137,5 @@ $
 
 Došli jsme k závěru, že pro strom sudého řádu 
 existuje právě jeden lichý faktor. #h(1fr) $ballot$
+
+
