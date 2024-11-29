@@ -5,11 +5,42 @@
 #import "@preview/codly:1.0.0": *
 #import "@preview/note-me:0.3.0": *
 
-#show: codly-init.with()
+#show heading: i-figured.reset-counters.with(extra-kinds: ("atom",))
+#show figure: i-figured.show-figure.with(extra-prefixes: (atom: "atom:"))
+#show math.equation: i-figured.show-equation.with(only-labeled: true)
+
+
+#show heading.where(level: 1): it => {    
+  text(24pt)[#it.body]
+}
+
+// #import "@preview/cetz:0.1.2": canvas, plot
+//
+// #canvas(length: 1cm, {
+//   plot.plot(size: (8, 6),
+//     x-tick-step: none,
+//     x-ticks: ((-calc.pi, $-pi$), (0, $0$), (calc.pi, $pi$)),
+//     y-tick-step: 1,
+//     {
+//       plot.add(
+//         style: plot.palette.blue,
+//         domain: (-calc.pi, calc.pi), x => calc.sin(x * 1rad))
+//       plot.add(
+//         hypograph: true,
+//         style: plot.palette.blue,
+//         domain: (-calc.pi, calc.pi), x => calc.cos(x * 1rad))
+//       plot.add(
+//         hypograph: true,
+//         style: plot.palette.blue,
+//         domain: (-calc.pi, calc.pi), x => calc.cos((x + calc.pi) * 1rad))
+//     })
+// })
+
+// #show: codly-init.with()
 #codly(
   languages: (
     rust: (
-      name: "Rust",
+      name: "rust",
       color: rgb("#CE412B"),
     ),
   ),
@@ -17,15 +48,41 @@
   zebra-fill: luma(248),
 )
 
-#show raw: set text(font: "JetBrainsMonoNL NF", size: 8pt)
+#show raw: set text(font: "JetBrainsMono NF", size: 8pt)
+
+#set raw(theme: "./Material-Theme.tmTheme")
+#show raw.where(block: true): it => block(
+  // fill: luma(245),
+  inset: 8pt,
+  radius: 5pt,
+  text(it)
+)
+// Display inline code in a small box
+// that retains the correct baseline.
+#show raw.where(block: false): box.with(
+  fill: luma(240),
+  inset: (x: 3pt, y: 0pt),
+  outset: (y: 3pt),
+  radius: 2pt,
+)
+#show raw.where(block: true): block.with(
+  stroke: (
+    left: 2pt + luma(230),
+    // top: 2pt + luma(230),
+    // bottom: 2pt + luma(230),
+  )
+)
+// #show math.equation: set text(font: "Neo Euler")
+
 #set text(
   lang: "cs",
   // font: "New Computer Modern",
-  font: "Latin Modern Sans",
-  // font: "Latin Modern Roman",
-  size: 12pt,
+  // font: "Latin Modern Sans",
+  font: "Latin Modern Roman",
+  // font: "EB Garamond",
+  size: 11pt,
 )
-#set page(paper: "us-letter")
+#set page(paper: "a4")
 
 #include "./title.typ"
 
@@ -39,7 +96,8 @@
   ),
   footer: context
   [
-    Diskrétní matematika -- Semestrální projekt
+    _Tranzitivní kostky a faktory stromů_
+    // Diskrétní matematika -- Semestrální projekt
     #h(1fr)
     #counter(page).display(
       "1/1",
@@ -47,6 +105,11 @@
     )
   ],
 )
+// #set page(
+//   header: align(right)[
+//     Tranzitivní kostky a faktory stromů
+//   ],
+// )
 
 
 #set heading(numbering: "1.")
@@ -57,75 +120,29 @@
   linebreaks: "optimized",
 )
 
-#set page(
-  header: align(right)[
-    Kombinatorika a Teorie Grafů: Analýza kostek a faktorů stromů
-  ],
-)
+#set block(spacing: 2em)
+#set par(leading: 0.8em)
+
+#counter(page).update(1)
 
 // Abstract
-#place(
-  top + center,
-  float: true,
-  clearance: 2em,
-)[
-  #par(justify: false)[
-    #text([*Abstrakt*], size: 14pt) \
-    Tato práce se zaměřuje na dvě matematické úlohy 
-    z oblasti kombinatoriky a teorie grafů. 
-    První část se věnuje analýze netranzitivních 
-    vlastností čtyřstěnných kostek a výpočtu 
-    pravděpodobností jejich vzájemných vítězství. 
-    Navíc zkoumá celkový počet možných konfigurací 
-    čísel na kostkách a při daných pravidlech 
-    maximalizuje pravděpodobnotí jejich vztahů. 
-    Druhá část se zabývá důkazem existence jednoznačného 
-    faktoru ve stromech se sudým počtem vrcholů, 
-    kde všechny vrcholy faktoru mají lichý stupeň. 
-  ]
-]
-// Outline
-
-#outline()
-
+#include "./formalities/abstract.typ"
 #pagebreak()
 
-= Úvod
+// Outline
+#include "./formalities/outline.typ"
+#pagebreak()
 
-V této práci se zaměřuji
-na dvě konkrétní úlohy. 
-První úloha pojednává o
-na kombinatorických vlastnostech
-netranzitivních kostek, které 
-vykazují překvapivé neintuitivní 
-pravděpodobnostní vztahy.
-Druhá úloha pochází z 
-oblasti teorie grafů.
-Zabývá se faktory 
-stromů se sudým počtem vrcholů 
-a hledáním jednoznačného faktoru 
-s lichými stupni vrcholů. 
-
-Kombinatorická část práce se zabývá 
-výpočty pravděpodobností mezi kostkami,
-rozmístěními čísel na kostkách
-a maximalizací pravděpodobnostní 
-hranice při splnění daných podmínek. 
-
-V části teorie grafů se pak 
-zabývám důkazem existence 
-faktoru s lichými stupněmi 
-ve stromech se 
-sudým počtem vrchlů.
-Dokážu také jednoznačnost tohoto faktoru.
-
+#include "./formalities/intro.typ"
+#pagebreak()
 
 // Combinatorics
 #include "./combinatorics/combinatorics.typ"
 
-#pagebreak()
-
 // Graph Theory
-#include "./graph_theory.typ"
+#include "./graph-theory/graph_theory.typ"
 
 #bibliography("combinatorics/bibl.yml")
+
+
+

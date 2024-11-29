@@ -48,7 +48,9 @@ fn precompute_probabilities_hashmap(
 // Dumps computations into a vector.
 fn precompute_probabilities_vec(dice: &Vec<Vec<usize>>) -> Vec<Vec<f64>> {
     let size = dice.len();
-    let mut cache = vec![vec![0.0; size]; size];
+    let mut cache: Vec<Vec<f64>> = vec![vec![0.0; size]; size];
+    
+    // Giving up space for speed
     for (i, a) in dice.iter().enumerate() {
         for (j, b) in dice.iter().enumerate() {
             cache[i][j] = pairwise_probability(a, b);
@@ -65,10 +67,11 @@ fn find_max_p_naive(side_count: usize) -> f64 {
 
     let dice = generate_dice(side_count);
     let mut max_p = 0.0;
-    let increment = 1.0 / (side_count * side_count) as f64;
+    let omega_size = side_count.pow(2);
+    let increment = 1.0 / omega_size as f64;
 
-    // Iterate from 1 to 16, incrementing by 1/|Omega|.
-    for step in 1..=16 {
+    // Iterate from 0 to 16, incrementing by 1/|Omega|.
+    for step in 0..=omega_size {
         let p = step as f64 * increment;
         println!("Testing for p = {}:", p);
 
@@ -113,13 +116,14 @@ fn find_max_p_caching_hashmap(side_count: usize) -> f64 {
     println!("Finding maximal p:");
 
     let dice = generate_dice(side_count);
+    let omega_size = side_count.pow(2);
+    let increment = 1.0 / omega_size as f64;
     let mut max_p = 0.0;
-    let increment = 1.0 / (side_count * side_count) as f64;
 
     let cache = precompute_probabilities_hashmap(&dice);
 
-    // Iterate from 1 to 16, incrementing by 1/|Omega|.
-    for step in 1..=16 {
+    // Iterate from 0 to |Omega|, incrementing by 1/|Omega|.
+    for step in 0..=omega_size {
         let p = step as f64 * increment;
         println!("Testing for p = {}:", p);
 
@@ -159,12 +163,13 @@ fn find_max_p_caching_vec(side_count: usize) -> f64 {
     println!("Finding maximal p:");
 
     let dice = generate_dice(side_count);
+    let omega_size = side_count.pow(2);
+    let increment = 1.0 / omega_size as f64;
     let mut max_p = 0.0;
-    let increment = 1.0 / (side_count * side_count) as f64;
 
     let cache = precompute_probabilities_vec(&dice);
 
-    for step in 1..=16 {
+    for step in 0..=omega_size {
         let p = step as f64 * increment;
         println!("Testing for p = {}:", p);
 
@@ -204,12 +209,13 @@ fn find_max_p_parallel(side_count: usize) -> f64 {
     println!("Finding maximal p:");
 
     let dice = generate_dice(side_count);
+    let omega_size = side_count.pow(2);
+    let increment = 1.0 / omega_size as f64;
     let mut max_p = 0.0;
-    let increment = 1.0 / (side_count * side_count) as f64;
 
     let cache = precompute_probabilities_vec(&dice);
 
-    for step in 1..=16 {
+    for step in 0..=omega_size {
         let p = step as f64 * increment;
         println!("Testing for p = {}:", p);
 
@@ -375,7 +381,7 @@ fn main() {
 
     let side_count = args[1].parse::<usize>()
                             .unwrap_or_else(|_| panic!("No side count provided"));
-    
+
     let approach = args.get(2).map_or("all", |v| v);
 
     match approach {

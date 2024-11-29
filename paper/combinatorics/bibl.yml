@@ -1,4 +1,19 @@
 intransitivity:
     type: Web
     title: Intransitivity
-    url: https://en.wikipedia.org/wiki/Intransitivity?useskin=vector
+    url: https://en.wikipedia.org/wiki/Intransitivity
+
+total_probability:
+  type: Web
+  title: Law of total probability
+  url: https://en.wikipedia.org/wiki/Law_of_total_probability
+
+chirality:
+  type: Web
+  title: Chirality
+  url: https://cs.wikipedia.org/wiki/Chiralita
+
+rust:
+  type: Web
+  title: Rust Programming Language
+  url: https://www.rust-lang.org/ 
