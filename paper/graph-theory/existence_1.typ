@@ -113,3 +113,5 @@ nemění (není porušen princip sudosti).
 
 Pro strom $T$ sudého stupně skutečně existuje lichý faktor $F$. 
 #h(1fr) $ballot$
+
+

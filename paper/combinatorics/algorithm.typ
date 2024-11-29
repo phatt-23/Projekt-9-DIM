@@ -98,7 +98,7 @@ Celý zdrojový kód naleznete zde: #link("https://github.com/phatt-23/Projekt-9
   Implementovaný algoritmus
 ]
 
-Celý algoritmus (naivní varianta):
+Celý algoritmus (naivní varianta) je zde:
 
 #figure([
   #sourcecode[```rust
@@ -143,9 +143,9 @@ Celý algoritmus (naivní varianta):
   ```]
 ], caption: [Naivní varianta funkce ```rust fn find_max_p```])
 
-Tento algoritmus je však velmi neefektivní, 
+Tento algoritmus je velmi neefektivní, 
 protože opakovaně počítá pravděpodobnosti mezi týmiž kostkami.
-V důsledku je alogitmus velmi pomalý.
+V důsledku je alogitmus značně pomalý.
 
 Je zřejmé, že by algoritmu přispělo 
 předpočítat pravděpodobnosti všech 

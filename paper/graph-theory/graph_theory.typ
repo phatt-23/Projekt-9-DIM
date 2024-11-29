@@ -13,11 +13,14 @@
 
 = Teorie grafů
 
-Mějme strom $T$ se sudým počtem vrcholu (je sudého řádu).
+Mějme strom $T$ se sudým počtem vrcholů (je sudého řádu).
 Cílem je ukázat, že pro $T$ existuje faktor $F$, kde všechny 
-vrcholy grafu $F$ jsou lichého stupně (budeme říkat lichý faktor).
+vrcholy grafu $F$ jsou lichého stupně (budeme nazývat jako lichý faktor).
 
-#include "./existence.typ"
+// #include "./existence_1.typ"
+#include "./existence_2.typ"
+#pagebreak()
 
 #include "./uniqueness.typ"
+#pagebreak()
 

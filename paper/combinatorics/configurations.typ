@@ -7,15 +7,15 @@
 
 == Různá rozmístění čísel na kostkách
 
-Kostky $A$, $B$ a $C$ jsou rozlišitelné, např. mají jiné barvy. 
-Kolik existuje různých konfigurací čísel, když čísla vybíráme
+Kostky $A$, $B$ a $C$ jsou rozlišitelné, například mají odlišné barvy.
+Jaký je počet různých konfigurací čísel, pokud vybíráme čísla z množiny
 z množiny $[1,6]$ s možností opakovaní.
 
-Zpusobů jak vybrat čtyři čísla z sešti (s možností opakování) je:
+Počet zpusobů, jak vybrat čtyři čísla z sešti (s možností opakování), je:
 $
   C^*(6,4) = binom(9,4) = 126
 $
-Proto možných konfigurací rozmístění čísel na třech kostkách je:
+Proto možných konfigurací čísel na třech kostkách je:
 $ 
   lr([C^*(6,4)], size: #150%)^3 = 126^3 
   = underline(underline(2000376))
@@ -25,7 +25,7 @@ $<computation-of-configurations>
   *Jiná úvaha (kuličky a přehrádky)*
 ]
 
-Výpočet různých konfigurací pro jednu kostku, můžeme také zapsat jako:
+Počet různých konfigurací pro jednu kostku lze také vyjádřit jako:
 $
   underbracket(binom(6,4)binom(3,3), #[a])
   + underbracket(binom(6,3)binom(3,2), #[b])
@@ -33,27 +33,26 @@ $
   + underbracket(binom(6,1)binom(3,0), #[d]) = 126
 $<computation-of-configurations-extended>
 
+Vysvětlení kroků:
 #enum(numbering: "a)",
   enum.item(1)[
-    Vybereme 4 různá čísla z 6 možných.
-    Umístíme 3 oddělovače mezi 4 stěnami kostky.
-    Vzniklé 4 přehrádky naplníme těmito čtyřmi čísly.
+    _Vybereme čtyři různá čísla z šesti možných._ \
+    Umístíme tři oddělovače mezi čtyřmi stěnami kostky (kuličky). 
+    Vzniklé čtyři přehrádky naplníme těmito vybranými čísly.
   ],
   enum.item(2)[
-    Vybereme 3 čísla z 6 možných.
-    Zvolíme dvě pozice ze tří, kam umístit 
-    2 oddělovače mezi 4 stěnami.
-    Vzniklé 3 přehrádky naplníme těmito třemi čísly.
+    _Vybereme tři čísla z šesti možných._ \
+    Zvolíme dvě pozice ze tří, kam umístit dva oddělovače mezi čtyřmi stěnami. 
+    Vzniklé tři přehrádky naplníme těmito čísly.
   ],
   enum.item(3)[
-    Vybereme dvě čísla z šesti možných. 
-    Zvolíme jednu ze tří pozic, kam umístíme jeden oddělovač.
-    Vznikle 2 přehrádky naplníme těmito dvěma čísly.
+    _Vybereme dvě čísla z šesti možných._ \
+    Zvolíme jednu ze tří pozic, kam umístíme jeden oddělovač. 
+    Vzniklé dvě přehrádky naplníme těmito čísly.
   ],
   enum.item(4)[
-    Vybereme 1 číslo z 6 možných. 
-    Máme jenom 1 přehrádku, 
-    kterou naplníme oným číslem.
+    _Vybereme jedno číslo z šesti možných._ \
+    Máme pouze jednu přehrádku, kterou naplníme tímto číslem.
   ],
 )
 
@@ -62,23 +61,16 @@ $<computation-of-configurations-extended>
   Enantiomorfy kostek
 ]
 
-@eqt:computation-of-configurations 
-a @eqt:computation-of-configurations-extended 
-platí ale pouze tehdy, 
-nebereme-li v úvahu různá 
-rozmístění pevně zvolených čísel na kostce.
-Jestliže máme 4 různá čísla, 
-tak jsme schopni tyto čísla 
-na čtyrstěnnou kostku 
-umístit dvěma různými způsoby.
-Neboť pro čtyřstěnnou kostku (se čtyřmi různými 
-čísly) existuje její zrcadlový obraz, 
-který s ní není identický. 
-Tento obraz tzv. představuje chirální enantiomorf 
-#footnote[https://cs.wikipedia.org/wiki/Chiralita]
-kostky. Ty jsou také vůči sobě izomorfní.
+Výpočet konfigurací podle @eqt:computation-of-configurations-extended platí 
+pouze za předpokladu, že nebereme v úvahu různá rozmístění pevně zvolených 
+čísel na kostce. Pokud máme například 4 různá čísla, lze je na čtyřstěnnou 
+kostku rozmístit dvěma různými způsoby, neboť každá konfigurace má svůj 
+zrcadlový obraz, který s ní není totožný. Tento obraz se nazývá chirální 
+enantiomorf #footnote[https://cs.wikipedia.org/wiki/Chiralita]. 
 
-Příklad z chemie:
+Podobný jev lze pozorovat v chemii u enantiomérů, 
+což představuje analogii k našim kostkám.
+
 #figure(
   grid(
     columns: (1fr, 0.3fr, 1fr),
@@ -126,9 +118,9 @@ Příklad z chemie:
   caption: [L-alanin a D-alanin (enantioméry)]
 )
 
-Pokud bychom tedy chtěli být zcela přesní, 
-tak @eqt:computation-of-configurations-extended (důvod proč byla zahrnuta)
-upravíme následovně: 
+Pokud bychom chtěli být zcela přesní, je třeba výpočet podle
+@eqt:computation-of-configurations-extended
+upravit následujícím způsobem: 
 $
   underbracket(
     2 dot binom(6,4), 
@@ -136,10 +128,14 @@ $
   )
   + binom(6,3)binom(3,1)
   + binom(6,2)binom(3,1)
-  + binom(6,1) = \
-  = 2 dot 15 + 20 dot 3 + 15 dot 3 + 6 = \ 
+  + binom(6,1) \
+$
+
+Tento výpočet se dále rozepíše jako:
+$
+  2 dot 15 + 20 dot 3 + 15 dot 3 + 6 \
   = 30 + 60 + 45 + 6 = underline(141)
 $
 
-Pro tři kostky bude možných konfigurací 
-$(141)^3 = underline(underline(2803221))$.
+Pro tři kostky tedy bude možných konfigurací:
+$ (141)^3 = underline(underline(2803221)) $

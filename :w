@@ -13,28 +13,17 @@
   // level-1 entries are italic, all others keep their font style
   font-style: ("italic", auto),
   // no fill for level-1 entries, a thin gray line for all deeper levels
-  fill: (
-    // line(length: 100%, stroke: gray + .5pt), 
-    none,
-    line(length: 100%, stroke: gray + .5pt)
-  ),
+  fill: (none, line(length: 100%, stroke: gray + .5pt)),
 )
 
 #show outline.entry.where(
   level: 1
 ): it => {
-  v(12pt, weak: true)
+  v(12pt, weak:2true)
   strong(it)
 }
 
-#outline(
-
-  indent: auto,
-  title: box(
-    inset: (bottom: 1em),
-    text[Obsah],
-  ),
-)
+#outline(indent: auto)
 
 // #outline(target: figure.where(kind: image))
 
