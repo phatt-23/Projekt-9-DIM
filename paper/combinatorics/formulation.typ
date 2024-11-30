@@ -15,7 +15,6 @@ Když jsou kostky vrženy současně,
 pokud pravděpodobnost, 
 že hodnota na kostce $X$ bude vyšší 
 než hodnota na kostce $Y$, je větší než $50%$.
-
 Tuto skutečnost zapíšeme jako $X>Y$.
 Pravděpodobnost výhry kostky $X$ nad kostkou $Y$
 označíme potom jako $P(X > Y)$.
@@ -27,7 +26,10 @@ označíme potom jako $P(X > Y)$.
 
   První úkolem je ukázat, že vztahy mezi kostkami nejsou tranzitivní, 
   to znamená, že vztahy mezi kostkami jsou tzv. cyklické
-  #footnote[https://en.wikipedia.org/wiki/Intransitivity]
+  #footnote[
+    Wikipedia, _Intransitivity_:
+    #link("https://en.wikipedia.org/wiki/Intransitivity")
+  ]
   Tvrdíme totiž, že platí $B > A$, $C > B$ a současně $A > C$.
   To znamená, že žádná kostka není "nejlepší" ve všech případech. 
 

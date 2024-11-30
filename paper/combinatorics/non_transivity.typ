@@ -111,7 +111,10 @@ Lze to ale udělat lépe?
 Všiměte si @eqt:notice-this-prob-equation.
 Její tvar můžeme využitím 
 zákonu celkové pravděpodobnosti
-#footnote[https://en.wikipedia.org/wiki/Law_of_total_probability] 
+#footnote[
+  Wikipedia, _Law of total probability_: 
+  #link("https://en.wikipedia.org/wiki/Law_of_total_probability")
+] 
 zobecnit.
 
 
@@ -130,6 +133,8 @@ pravdepodobnostní prostor $Omega$, tedy:
 $
   union.big_(i=0)^n C_i = Omega "  a  " C_i sect C_j " pro " i eq.not j
 $
+
+#pagebreak()
 
 Událostmi jsou v našem případě  $X > Y$ (kostka $X$ vyhraje nad kostkou $Y$).
 Disjunktní podmínky $C_i$ odpovídají výsledkům hodů kostky $Y$,

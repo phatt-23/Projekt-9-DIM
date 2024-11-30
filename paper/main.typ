@@ -9,9 +9,16 @@
 #show figure: i-figured.show-figure.with(extra-prefixes: (atom: "atom:"))
 #show math.equation: i-figured.show-equation.with(only-labeled: true)
 
+#show link: set text(fill: rgb(0, 0, 100)) // make links blue
+#show link: underline // underline links
+
 #show heading.where(level: 1): it => {    
-  text(1.5em)[#it.body]
+  text(2em)[#it.body]
 }
+
+#show heading.where(level: 2): set text(size: 1.5em)
+#show heading.where(level: 3): set text(size: 1.2em)
+
 
 // #show: codly-init.with()
 #codly(
@@ -49,13 +56,14 @@
 )
 
 // #show math.equation: set text(font: "Neo Euler")
-#show sym.emptyset: set text(font: "Fira Sans")
+// #show math.equation: set text(font: "JetBrainsMono NF")
+// #show sym.emptyset: set text(font: "Fira Sans")
 
 #set text(
   lang: "cs",
   // font: "New Computer Modern",
-  // font: "Latin Modern Sans",
-  font: "Latin Modern Roman",
+  font: "Latin Modern Sans",
+  // font: "Latin Modern Roman",
   // font: "EB Garamond",
   size: 11pt,
 )
@@ -119,7 +127,7 @@
 // Graph Theory
 #include "./graph-theory/graph_theory.typ"
 
-#bibliography("combinatorics/bibl.yml")
+// #bibliography("combinatorics/bibl.yml")
 
 
 

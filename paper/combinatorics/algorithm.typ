@@ -25,11 +25,20 @@ stěn kostek z množiny čísel $[1,6]$
 // Doba běhu algoritmu avšak nesplňovala mé. 
 // Po uvážení Rozhodl jsem se jej prepsat v programovacim jazyce Rust.
 Algoritmus jsem se rozhodl implementovat 
-v programovacím jazyce Rust #footnote[https://www.rust-lang.org/].
-Celý zdrojový kód naleznete zde: #link("https://github.com/phatt-23/Projekt-9-DIM/blob/master/program/src/main.rs")
+v programovacím jazyce Rust 
+#footnote[
+  Programovací jazyk Rust:
+  #link("https://www.rust-lang.org/")
+].
+Celý zdrojový kód naleznete 
+#link("https://github.com/phatt-23/Projekt-9-DIM/blob/master/program/src/main.rs")[zde]
+#footnote[
+  GitHub repozitář se zdrojovým kódem:
+  #link("https://github.com/phatt-23/Projekt-9-DIM/blob/master/program/src/main.rs")
+].
 // [`https://github.com/phatt-23/Projekt-9-DIM`]
 
-#heading(outlined: false, offset: 3, numbering: none)[
+#heading(outlined: false, offset: 2, numbering: none)[
   Základní idea algoritmu
 ]
 
@@ -89,13 +98,13 @@ Celý zdrojový kód naleznete zde: #link("https://github.com/phatt-23/Projekt-9
         }
     }
     ```]
-  ], caption: [Kód pro prověřování podmínek])
+  ], caption: [Kód na prověřování podmínek])
 ]
 
 // #pagebreak()
 
-#heading(outlined: false, offset: 3, numbering: none)[
-  Implementovaný algoritmus
+#heading(outlined: false, offset: 2, numbering: none)[
+  Implementace algoritmu
 ]
 
 Celý algoritmus (naivní varianta) je zde:
@@ -225,6 +234,8 @@ a využil ji v upravené funkci pro hledaní maximální hodnoty $p$:
 ], caption: [Upravená funkce ```rust fn find_max_p```])
 
 
+#pagebreak()
+
 Posledně jsem droubnou úpravou cyklů algoritmus paralelizoval: 
 
 #figure([
@@ -267,7 +278,7 @@ Posledně jsem droubnou úpravou cyklů algoritmus paralelizoval:
 Vzhledem k tomu, že se zde zabýváme čtyřstěnnými kostkami, 
 paralelizace přinesla pouze mírné časové zlepšení.
 
-#heading(outlined: false, offset: 3, numbering: none)[
+#heading(outlined: false, offset: 2, numbering: none)[
   Výpis po zpuštění programu
 ]
 
@@ -294,8 +305,8 @@ Z výpisu algoritmu jsem zpozoroval,
 že maximalní hodnota, kterou $p$ může nabývat, je $9/16$ neboli $0.5625$. 
 Také jsem zjístil o jaké konfigurace kostek, 
 které splňuji dané podmínky, se přesně jedná.
-Dvě z nich, [0] a [3], dokonce odpovídají konfiguraci ve slovním zadání,
-neberu-li v potaz jejich označení.
+Dvě z nich (s indexy 0 a 3) dokonce odpovídají konfiguraci ve slovním zadání,
+neberu-li v potaz označení kostek.
 
 
 

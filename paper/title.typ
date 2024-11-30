@@ -16,7 +16,7 @@
 #v(50pt)
 
 #align(horizon)[
-  #text(size: 30pt, [
+  #text(size: 36pt, [
     *Diskrétní matematika*
   ])\
   #text(size: 24pt, [

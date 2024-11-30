@@ -33,7 +33,7 @@ $
   + underbracket(binom(6,1)binom(3,0), #[d]) = 126
 $<computation-of-configurations-extended>
 
-Vysvětlení kroků:
+Vysvětlení členů:
 #enum(numbering: "a)",
   enum.item(1)[
     _Vybereme čtyři různá čísla z šesti možných._ \
@@ -56,6 +56,7 @@ Vysvětlení kroků:
   ],
 )
 
+#pagebreak()
 
 #heading(outlined: false, offset: 3, numbering: none)[
   Enantiomorfy kostek
@@ -66,7 +67,10 @@ pouze za předpokladu, že nebereme v úvahu různá rozmístění pevně zvolen
 čísel na kostce. Pokud máme například 4 různá čísla, lze je na čtyřstěnnou 
 kostku rozmístit dvěma různými způsoby, neboť každá konfigurace má svůj 
 zrcadlový obraz, který s ní není totožný. Tento obraz se nazývá chirální 
-enantiomorf #footnote[https://cs.wikipedia.org/wiki/Chiralita]. 
+enantiomorf 
+#footnote[
+  Wikipedia, _Chiralita_: #link("https://cs.wikipedia.org/wiki/Chiralita")
+]. 
 
 Podobný jev lze pozorovat v chemii u enantiomérů, 
 což představuje analogii k našim kostkám.

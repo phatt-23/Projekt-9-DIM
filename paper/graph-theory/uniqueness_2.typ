@@ -37,20 +37,18 @@ právě v jednom z faktorů, nikoliv v obou.
 $
   G = lr((V(T), E(F_A) xor E(F_B)), size: #150%)
 $
-Výhodněji zapíšeme jako:
-$
-  G = F_A xor F_B
-$
+// Výhodněji zapíšeme jako:
+// $
+//   G = F_A xor F_B
+// $
 Pokud je graf $G$ nulovým grafem:
 $
   G = lr((V(T), emptyset), size: #150%)
 $
-tak $E(F_A) = E(F_B)$, z čehož plyne, že $F_A = F_B$.
+tak $E(F_A) = E(F_B)$, z čehož plyne, že $F_A = F_B$ (popisují tentýž graf).
 
 #heading(outlined: false, offset: 2, numbering: none)[
-  #text(weight: "bold")[ 
-    _Sudost a lichost stupní vrcholů $v in V(G)$_
-  ]
+  Sudost a lichost stupní vrcholů $v in V(G)$
 ]
 
 Sudost a lichost stupně vrcholů grafu $G$ závisí na tom, 
@@ -125,7 +123,13 @@ Při symetrickém rozdílu hran faktorů $F_A$ a $F_B$, mohou nastat tyto příp
   ],
 )
 
-Došli jsme k závěru, že vrcholy v grafu $G$ budou vždy sudého stupně:
+
+#heading(outlined: false, offset: 2, numbering: none)[
+  Závěr
+]
+
+
+Nyní víme, že vrcholy v grafu $G$ budou vždy sudého stupně:
 $
   forall v in V(G), deg_G (v) = 2k quad "pro" k in NN_0
 $
