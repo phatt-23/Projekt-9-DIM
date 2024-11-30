@@ -47,7 +47,9 @@
     left: 2pt + luma(230),
   )
 )
+
 // #show math.equation: set text(font: "Neo Euler")
+#show sym.emptyset: set text(font: "Fira Sans")
 
 #set text(
   lang: "cs",

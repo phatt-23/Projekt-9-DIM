@@ -21,6 +21,9 @@ vrcholy grafu $F$ jsou lichého stupně (budeme nazývat jako lichý faktor).
 #include "./existence_2.typ"
 #pagebreak()
 
-#include "./uniqueness.typ"
+// #include "./uniqueness.typ"
+// #pagebreak()
+
+#include "./uniqueness_2.typ"
 #pagebreak()
 

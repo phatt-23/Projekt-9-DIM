@@ -34,32 +34,33 @@ $
   F_1 Delta F_2
 $
 
-Při rozhodování, zda hranu $e$ do $F_1 Delta F_2$ zahrneme, postupujeme takto:
-#figure(
-  table(
-    columns: 3,
-    stroke: 0.2pt,
-    table.header[hrana $e$ je zahrnuta v $F_1$][hrana $e$ je zahrnuta v $F_2$][hrane $e$ je zahrnuta v $F_1 Delta F_2$],
-    [ano],[ano],[ne],
-    [ne],[ano],[ano],
-    [ano],[ne],[ano],
-    [ne],[ne],[ne],
-  )
-)
-nebo stručněji:
-#figure(
-  table(
-    columns: 3,
-    stroke: 0.2pt,
-    table.header[$e in E(F_1)$][$e in E(F_2)$][$e in E(F_1) Delta E(F_2)$],
-    [1],[1],[0],
-    [0],[1],[1],
-    [1],[0],[1],
-    [0],[0],[0],
-  )
-)
+// Při rozhodování, zda hranu $e$ do $F_1 Delta F_2$ zahrneme, postupujeme takto:
+// #figure(
+//   table(
+//     columns: 3,
+//     stroke: 0.2pt,
+//     table.header[hrana $e$ je zahrnuta v $F_1$][hrana $e$ je zahrnuta v $F_2$][hrane $e$ je zahrnuta v $F_1 Delta F_2$],
+//     [ano],[ano],[ne],
+//     [ne],[ano],[ano],
+//     [ano],[ne],[ano],
+//     [ne],[ne],[ne],
+//   )
+// )
+// nebo stručněji:
+// #figure(
+//   table(
+//     columns: 3,
+//     stroke: 0.2pt,
+//     table.header[$e in E(F_1)$][$e in E(F_2)$][$e in E(F_1) Delta E(F_2)$],
+//     [1],[1],[0],
+//     [0],[1],[1],
+//     [1],[0],[1],
+//     [0],[0],[0],
+//   )
+// )
 
 Pokud je hrana $e$ obsažena v obou faktorech, tak se vyruší.
+
 přičemž zahrneme všechny hrany incidentní s $v$ v $F_2$ ($E_(F_2)^v$). 
 Obou jich je lichý počet, proto stupeň vrcholu $v$ je sudý. Tedy:  
 $
@@ -121,9 +122,12 @@ Uvažíme-li, že vrcholy nejsou stupně~0, dostaneme vrcholy,
 které jsou nuceny mít stupeň alespoň 2. 
 Pokud by měli všechny vrcholy stupeň rovno dvěma, 
 takový graf by spadal do třídy grafů zvané jako cesty. 
+
 Cesty jsou cyklické -
 stromy jsou jsou acyklické -
 je zde kontradikce.
+Acyklický strom nemůžeme obsahovat cyklický podgraf.
+
 Ve stromě $T$ jsme našli cyklus - není možné. 
 Je zjevné, že jakýkoliv graf s vyššími stupněmi vrcholů
 taktéž obsahuje cyklus.
