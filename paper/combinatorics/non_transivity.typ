@@ -19,9 +19,9 @@ počet možných kombinací výsledků
 při "souboji" dvou kostek je $4 dot 4 = 16$, 
 což odpovídá mohutnosti množiny
 kartezského součinu $X times Y$ kostek $X$ a $Y$.
-
-Tato pravděpodobnost se vypočítá jako podíl 
-počtu případů, kdy číslo na kostce X je větší než číslo na kostce Y  
+Pravděpodobnost se vypočítá jako podíl 
+počtu případů, kdy padlé číslo na kostce X 
+je větší než číslo na kostce Y  
 a celkového počtu možných kombinací výsledků.
 $
   P(X > Y) &= (lr(|{ (x,y) in X times Y : x > y }|, size: #150%))/(|X times Y|)
@@ -49,7 +49,6 @@ $
   Omega = lr({ (b,a) : b in B, a in A }, 
   size: #150%) <=> B times A quad
 $
-#set highlight(fill: rgb("c7f0c9"))
 $
   Omega = lr({
     &(2,1), (2,1), (5,1), (5,1), \
@@ -59,7 +58,7 @@ $
   }, size: #150%) \
 $
 
-Velikost pravděpodobnostního prostoru je $|Omega| = 16$. 
+// Velikost pravděpodobnostního prostoru je $|Omega| = 16$. 
 Z rozepsané $Omega$ vidíme, že
 počet případů, kdy kostka $B$ vyhraje 
 nad $A$ je vyšší (10) než počet, kdy prohraje (6).
@@ -82,10 +81,10 @@ Využijeme toho, že se kostky skládají
 ze dvou různých čísel.
 Pokud hodnota kostky $A$ je 1, 
 tak kostka $B$ vyhraje vždy a to 
-bez ohledu na na její hozenou hodnotu.
+bez ohledu na její vrženou hodnotu.
 Pokud padla na kostce $A$ hodnota 4, 
 tak $B$ vyhraje pouze tehdy, 
-když byla vržena hodnota $5$.
+když bude vržena hodnota $5$.
 To zapišeme a vypočítáme následně.
 
 $
@@ -103,7 +102,7 @@ $
   &= 1/4 dot 1 + 3/4 dot 1/2 \
   &= 2/8 + 3/8 = 5/8 = underline(underline(0.625)) \
 $
-$P(B > A) = 5/8 > 1/2$, proto kostka $B$ je lepší než $A$. #h(1fr) $ballot$
+Protože $P(B > A) = 5/8 > 1/2$, je kostka $B$ lepší než kostka $A$. #h(1fr) $ballot$
 
 Zbývalé pravděpodobnosti $P(C > B)$ a $P(A > C)$ 
 bychom mohli vypočítat obdobně jako $P(B > A)$.
@@ -131,12 +130,12 @@ $
 kde $C_i$ jsou disjunktní podmínky pokrývající celý 
 pravdepodobnostní prostor $Omega$, tedy:
 $
-  union.big_(i=0)^n C_i = Omega "  a  " C_i sect C_j " pro " i eq.not j
+  union.big_(i=0)^n C_i = Omega "  a  " C_i sect C_j = emptyset " pro " i eq.not j
 $
 
 #pagebreak()
 
-Událostmi jsou v našem případě  $X > Y$ (kostka $X$ vyhraje nad kostkou $Y$).
+Zkoumanými událostmi jsou v našem případě  $X > Y$ (kostka $X$ vyhraje nad kostkou $Y$).
 Disjunktní podmínky $C_i$ odpovídají výsledkům hodů kostky $Y$,
 která může nabývat hodnot $y_0, y_1, ..., y_n$.
 Podmínky $Y=y_i$ jsou disjunktní, protože platí:
@@ -155,11 +154,16 @@ $
 
 
 === Aplikace vzorce na $P(C > B)$ a $P(A > C)$
-Pro připomenutí, množiny $A$, $B$ a $C$ jsou:
+Pro připomenutí, množiny $A$, $B$ a $C$ jsou definované jako:
 $
   A = {1,4,4,4} quad B = {2,2,5,5} quad C = {3,3,3,6}
 $
-Výpočty pravděpodobností pomocí odvozeného vzorce:
+
+#heading(outlined: false, offset: 3, numbering: none)[
+  #text(weight: "regular")[ 
+    _Výpočty pravděpodobností pomocí odvozeného vzorce_
+  ]
+]
 
 $
   P(C > B) &= sum_(b in B) P(B = b) dot P(C > b) \
@@ -175,3 +179,5 @@ $
 $
 
 Dokázali jsme, že $B > A$, $C > B$ a $A > C$. #h(1fr) $ballot$
+
+

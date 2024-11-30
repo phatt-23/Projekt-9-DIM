@@ -12,9 +12,8 @@
 
 Existenci faktoru stromu dokážeme indukci -- konkrétně jeho rekurzivní konstrukcí. 
 
-Nechť $T = (V,E)$ je strom, kde:
-$
-|V(T)| equiv 0 space (mod 2)$ a $|V(T)| >= 2$.
+Nechť $T = (V,E)$ je strom, kde
+$|V(T)| equiv 0 space (mod 2)$ a $|V(T)| >= 2$.
 
 #heading(outlined: false, offset: 2, numbering: none)[
   Základní případ
@@ -33,7 +32,7 @@ kde $deg_T (v_p) > 1$ (tj. nebereme listy), a výjmeme ho z grafu.
 Výsledkem je graf $T - {v_p}$, jehož komponenty, 
 které jsou rovněž stromy, označíme jako: 
 $ 
-  K_1, K_2, dots, K_(deg_T (v_p)) 
+  K_1, K_2, dots, K_n quad "kde" n = deg_T (v_p)
 $
 Hranu, která spojuje vrchol $v_p$ s komponentou $K_i$, označíme jako $e_i$.
 
@@ -50,8 +49,8 @@ Hranu, která spojuje vrchol $v_p$ s komponentou $K_i$, označíme jako $e_i$.
         node[shape=circle];
         v
         node[style="dashed"]
-        v -- K_sec_last [xlabel="e_(i-1)", style="dashed"];
-        v -- K_i [xlabel="e_i", style="dashed"];
+        v -- K_sec_last [xlabel="e_(n-1)", style="dashed"];
+        v -- K_n [xlabel="e_n", style="dashed"];
         node[style="full"]
         v -- K_2 [xlabel="e_2"];
         v -- K_4 [xlabel="e_4"];
@@ -64,10 +63,10 @@ Hranu, která spojuje vrchol $v_p$ s komponentou $K_i$, označíme jako $e_i$.
     "K_3": [#h(2em) $K_3$ #h(2em)],
     "K_2": [#h(1em) $K_2$ #h(1em)],
     "K_4": [#h(3em) $K_4$ #h(3em)],
-    "K_sec_last": [#h(1em) $K_(i-1)$ #h(1em)],
-    "K_i": [#h(1em) $K_i$ #h(1em)],
+    "K_sec_last": [#h(1em) $K_(n-1)$ #h(1em)],
+    "K_i": [#h(1em) $K_n$ #h(1em)],
   )),
-  caption: [Strom $T$ s vyznačeným vrcholem $v_p$],
+  caption: [Strom $T$ s vybraným vrcholem $v_p$, komponentami $K_i$ a hranami $e_i$],
 )
 
 #pagebreak()
@@ -96,15 +95,12 @@ $
 $
 Dále platí:
 $
-  // T - {v_p} &= (xor.big_(K in S) K) xor (xor.big_(K in L) K) \
   V(T - {v_p}) &= (xor.big_(K in S) V(K)) xor (xor.big_(K in L) V(K)) \
-$
-$
   |V(T - {v_p})| &= sum_(K in S) |V(K)| + sum_(K in L) |V(K)| equiv 1 quad (mod 2)
 $
 kde znak $xor$ představuje operátor symetrického rozdílu
 #footnote[
-  Wikipedia, _Symetrický rozdíl_: #link("https://en.wikipedia.org/wiki/Symmetric_difference")
+  Wikipedia, _Symmetric difference_: #link("https://en.wikipedia.org/wiki/Symmetric_difference")
 ]
 dvou množin.
 
@@ -112,7 +108,7 @@ Liché číslo lze získat pouze součtem sudého a lichého čísla:
 $
   underbracket(2t, #[sudé]) 
   + underbracket((2k + 1), #[liché]) 
-equiv 1 quad (mod 2), quad "pro" k,t in ZZ
+equiv 1 quad (mod 2) quad "pro" k,t in ZZ
 $
 
 Jedna z množin tedy musí mít lichý součet počtu vrcholů svých komponent, 
@@ -121,13 +117,6 @@ $
   sum_(K in S) |V(K)| equiv 0 quad (mod 2)
 $
 protože suma počtů vrcholů komponent v $S$ je vždy sudá.
-// $
-//   forall K in S : space |V(K)| &= 2k quad "pro" k in NN \
-//   p &= |S| \
-//   p(2k) equiv 0 space (mod 2)
-//   quad &=> quad
-//   p = NN_0
-// $
 Z čehož plyne:
 $
   sum_(K in L) |V(K)| equiv 1 space (mod 2)
@@ -146,8 +135,9 @@ To znamená, že množina $L$ obsahuje lichý počet komponent:
 $
   |L| equiv 1 quad (mod 2)
 $
-neboť jediný způsob, kterým získáme liché číslo součtem lichých čísel (počet vrcholů komponenty v $L$), 
-je, když máme lichý počet (mohutnost množiny $L$) lichých čísel.
+neboť jediný způsob, jak získat liché číslo součtem 
+lichých čísel (počet vrcholů komponenty v $L$), je, 
+když máme lichý počet (mohutnost množiny $L$) lichých čísel:
 $
   forall K in L : space
   |V(K)| &= 2k + 1 quad "pro" k in NN \
@@ -158,9 +148,8 @@ $
   2p k + p &equiv 1 quad (mod 2) \
   p &equiv 1 quad (mod 2) \
 $
-// $
-//   p = 2t + 1 quad "kde" t in ZZ
-// $
+
+
 
 #heading(outlined: false, offset: 2, numbering: none)[
   Konstrukce faktoru 
@@ -173,33 +162,33 @@ $
   sum_(v in K) deg_K (v) equiv 0 space (mod 2)
 $
 Nemůže tedy existovat lichý faktor stromu lichého řádu, 
-protože by to porušovalo tento princip.
+protože to by tento princip porušovalo.
 
-Abychom zajistili sudost, přidáme do každého $K in L$ 
+Abychom zajistili sudost, přidáme do každé komponenty $K in L$ 
 zpět výjmutý vrchol $v_p$ (včetně hrany $e_i$),
-čímž získáme stromy $K + {v_p}$ sudého řádu. 
-Na tento strom aplikujeme indukční krok.
-Vrchol $v_p$ bude mít stupeň roven počtu komponent v $L$:
-$
-  deg(v_p) = |L| equiv 1 quad (mod 2)
-$
+čímž získáme stromy $K + {v_p}$ sudého řádu.
+Jelikož jsou sudé, můžeme na ně aplikovat indukční krok.
 
 Komponentám v $S$ nepřidáváme vrchol $v_p$, 
 neboť už jsou sudého řádu.
 I na ně aplikujeme indukční krok.
 
+Vrchol $v_p$ bude mít stupeň roven počtu komponent v $L$:
+$
+  deg(v_p) = |L| equiv 1 quad (mod 2)
+$
 
-Na konci indukce (rekurze) bude každý vrchol $v in V(T)$ lichého stupně,
-protože:
+Na konci indukce (rekurze) bude každý vrchol $v in V(T)$ 
+lichého stupně, protože:
 $ 
   deg(v) = |L|
 $
 přičemž mohutnost $L$ je v každém kroku lichá. 
-Tím je existence faktoru prokázána. #h(1fr) $ballot$
+Tím je existence lichého faktoru dokázána. #h(1fr) $ballot$
 
 
 #heading(outlined: false, offset: 2, numbering: none)[
-  Ukázka algoritmu
+  Ukázka algoritmu (indukce/rekurze)
 ]
 
 #v(9em)
@@ -253,7 +242,7 @@ Tím je existence faktoru prokázána. #h(1fr) $ballot$
       "18": [1],
     )
   )
-], caption: [Strom $T$ s vyznačenými stupněmi vrcholů a vybraným vrcholem $v_p$])
+], gap: 10em, caption: [Strom $T$ s vyznačenými stupni vrcholů a vybraným vrcholem $v_p$])
 
 #pagebreak()
 #figure([
@@ -393,7 +382,7 @@ Tím je existence faktoru prokázána. #h(1fr) $ballot$
       "18": [1],
     )
   )
-], caption: [Rekurzivní konstrukce lichého faktoru stromu $T$])
+], gap: 6em, caption: [Rekurzivní konstrukce lichého faktoru stromu $T$])
 
 #pagebreak()
 
@@ -449,4 +438,4 @@ Tím je existence faktoru prokázána. #h(1fr) $ballot$
       "18": [1],
     )
   )
-], caption: [Nalezený lichý faktor stromu $T$])
+], gap: 10em, caption: [Nalezený lichý faktor stromu $T$])

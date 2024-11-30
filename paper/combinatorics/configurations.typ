@@ -7,11 +7,13 @@
 
 == Různá rozmístění čísel na kostkách
 
-Kostky $A$, $B$ a $C$ jsou rozlišitelné, například mají odlišné barvy.
-Jaký je počet různých konfigurací čísel, pokud vybíráme čísla z množiny
+Kostky $A$, $B$ a $C$ jsou rozlišitelné (například mají odlišné barvy).
+Zajímá nás, 
+jaký je počet různých konfigurací čísel, 
+pokud vybíráme čísla z množiny
 z množiny $[1,6]$ s možností opakovaní.
 
-Počet zpusobů, jak vybrat čtyři čísla z sešti (s možností opakování), je:
+Počet způsobů, jak vybrat čtyři čísla z sešti (s možností opakování), je:
 $
   C^*(6,4) = binom(9,4) = 126
 $
@@ -58,16 +60,16 @@ Vysvětlení členů:
 
 #pagebreak()
 
-#heading(outlined: false, offset: 3, numbering: none)[
+#heading(outlined: false, offset: 2, numbering: none)[
   Enantiomorfy kostek
 ]
 
 Výpočet konfigurací podle @eqt:computation-of-configurations-extended platí 
-pouze za předpokladu, že nebereme v úvahu různá rozmístění pevně zvolených 
-čísel na kostce. Pokud máme například 4 různá čísla, lze je na čtyřstěnnou 
+pouze za předpokladu, nebereme-li v úvahu různá rozmístění pevně zvolených 
+čísel na kostce. Pokud máme 4 různá čísla, lze je na čtyřstěnnou 
 kostku rozmístit dvěma různými způsoby, neboť každá konfigurace má svůj 
-zrcadlový obraz, který s ní není totožný. Tento obraz se nazývá chirální 
-enantiomorf 
+zrcadlový obraz, který s ní není totožný. 
+Tento obraz se nazývá tvz. jako chirální enantiomorf 
 #footnote[
   Wikipedia, _Chiralita_: #link("https://cs.wikipedia.org/wiki/Chiralita")
 ]. 

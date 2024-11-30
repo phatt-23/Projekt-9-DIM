@@ -7,14 +7,9 @@
 #import "@preview/outrageous:0.1.0"
 
 #show outline.entry: outrageous.show-entry.with(
-  // the typst preset retains the normal Typst appearance
   ..outrageous.presets.typst,
-  // we only override a few things:
-  // level-1 entries are italic, all others keep their font style
   font-style: ("italic", auto),
-  // no fill for level-1 entries, a thin gray line for all deeper levels
   fill: (
-    // line(length: 100%, stroke: gray + .5pt), 
     none,
     line(length: 100%, stroke: gray + .5pt)
   ),
@@ -28,7 +23,6 @@
 }
 
 #outline(
-
   indent: auto,
   title: box(
     inset: (bottom: 0.8em),
@@ -36,7 +30,4 @@
   ),
 )
 
-// #outline(target: figure.where(kind: image))
-
-// #outline(target: figure.where(kind: code))
 

@@ -1,7 +1,7 @@
 
 == Formulace a popis úloh
 Nechť máme tři čtyřstenné kostky $A$, $B$ a $C$,
-jejíchž čísla na stěnnách jsou definovaná množinami takto:
+jejichž čísla na stěnnách jsou definovaná množinami takto:
 
 $
   A = {1,4,4,4} \
@@ -45,8 +45,8 @@ označíme potom jako $P(X > Y)$.
   konfigurací čísel tří kostek.
   Čísla na stěny kostek vybíráme 
   z množiny $[1,6]$, přičemž se čísla 
-  mohou opakovat. Navíc jsou kostky jsou 
-  rozlišitelné (např. barvou). 
+  mohou opakovat. 
+  Kostky jsou navíc rozlišitelné (např. barvou). 
 ]
 
 + #[ 

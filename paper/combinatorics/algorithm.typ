@@ -17,7 +17,7 @@ $
 $
 pričemž hodnoty pravděpodobnosti $P(X > Y)$ 
 manipulujeme volným výběrem čísel
-stěn kostek z množiny čísel $[1,6]$ 
+čtyř stěn kostek z množiny čísel $[1,6]$ 
 (s možností opakování).
 
 // Algoritmus jsem zprvu implementoval v programovacím jazyce Python.
@@ -43,8 +43,8 @@ Celý zdrojový kód naleznete
 ]
 
 1. #[
-  Nejprve se vygenerují všechny číselné kombinace čísel kostek.
-  K vygenerovaní kombinací čísel kostek jsem si napsal 
+  Nejprve se vygenerují všechny číselné kombinace kostky.
+  K vygenerovaní těchto kombinací jsem si napsal 
   pomocnou funkci ```rust fn generate_dice```, ve které volám funkci
   ```rust fn combinations_with_replacement``` z knihovny `itertools`.
 
@@ -59,7 +59,7 @@ Celý zdrojový kód naleznete
 ]
 
 + #[
-  Vypočítání probability $P(X > Y)$ zajišťuje následující funkce:
+  Vypočítání pravděpodobnosti $P(X > Y)$ zajišťuje následující funkce:
 
   #figure([
     #sourcecode[```rust
@@ -84,7 +84,7 @@ Celý zdrojový kód naleznete
   Použitím tří vnořených cyklů se 
   prověří, jestli pro stávající $p$ platí, že 
   $P(B > A) >= p$, \ $P(C > B) >= p$ a $P(A > C) > p$
-  pro všechny možné kombinace kostek $A$, $B$ a $C$.
+  pro některou z kombinací kostek $A$, $B$ a $C$.
   #figure([
     #sourcecode[```rust
     for a in &dice {          // Check all combinations of A, B, C
@@ -107,7 +107,7 @@ Celý zdrojový kód naleznete
   Implementace algoritmu
 ]
 
-Celý algoritmus (naivní varianta) je zde:
+Celý algoritmus (jeho naivní varianta) je zde:
 
 #figure([
   #sourcecode[```rust
@@ -118,13 +118,13 @@ Celý algoritmus (naivní varianta) je zde:
       let omega_size = side_count.pow(2);
       let increment = 1.0 / omega_size as f64; // p grows by this step
       
-      for step in 0..=omega_size {          // Iterate from 0 to |Omega|
-          let p = step as f64 * increment;  // Incrementing by 1/|Omega|
-          let mut valid = false;            // No valid configs have yet been found
+      for step in 0..=omega_size {         // Iterate from 0 to |Omega|
+          let p = step as f64 * increment; // Incrementing by 1/|Omega|
+          let mut valid = false;           // No valid configs yet found
           println!("Testing for p = {}:", p);
 
-          'outer:                           // Tag to jump to from within the loop
-          for a in &dice {                  // Test out every single combination
+          'outer:                          // Tag to jump to from within the loop
+          for a in &dice {                 // Test out every single combination
               for b in &dice {
                   for c in &dice {
                       // Get the probabilities of P(B > A), P(C > B), P(A > C)
@@ -152,21 +152,22 @@ Celý algoritmus (naivní varianta) je zde:
   ```]
 ], caption: [Naivní varianta funkce ```rust fn find_max_p```])
 
-Tento algoritmus je velmi neefektivní, 
-protože opakovaně počítá pravděpodobnosti mezi týmiž kostkami.
-V důsledku je alogitmus značně pomalý.
+Tato naivní varianta algoritmu je velmi neefektivní, 
+neboť opakovaně počítá pravděpodobnosti mezi týmiž kostkami.
+V důsledku je alogitmus znatelně pomalý.
 
 Je zřejmé, že by algoritmu přispělo 
-předpočítat pravděpodobnosti všech 
+prvně předpočítat pravděpodobnosti všech 
 kombinací dvou kostek.
-Vypočtené hodnoty uložíme pole. 
-Konkrétně použijeme dynamické pole v Rustu zvaný jako ```Rust Vec<T>```.
+Vypočtené hodnoty se uloží do matice (pole polí). 
+Konkrétně se použije dynamické pole ```Rust Vec<T>``` 
+ze standardní knihovny jazyka Rust.
 
 Pro naplnění tohoto pole předpočtenými hodnotami 
 pravděpodobností, jsem si napsal následující funkci, 
 která vrací matici pravděpobností kombinací kostek $X$ a $Y$
-(obětuje paměť za zaručení rychlejšího vyhledání 
-hodnoty pravděpodobnosti):
+(obětuje se paměť pro rychlejší vyhledání 
+hodnot pravděpodobností):
 
 #figure([
   #sourcecode[```rust
@@ -231,8 +232,12 @@ a využil ji v upravené funkci pro hledaní maximální hodnoty $p$:
       // ... (identical with the previous)
   }
   ```]
-], caption: [Upravená funkce ```rust fn find_max_p```])
+], caption: [Rychlejší varianta ```rust fn find_max_p``` s předpočítanými hodnotami])
 
+Verze s předpočítanými hodnotami pravděpodobností výrazně zrychluje celý proces.
+Díky tomu, že místo opakovaného výpočtu pravděpodobnosti pro každý pár kostek mezi 
+každým cyklem, máme uložené hodnoty v matici, což zrychlí nalezení pravěpodobnosti 
+$P(X > Y)$ na konstantní čas $O(1)$.
 
 #pagebreak()
 
@@ -302,11 +307,11 @@ Valid configurations for p = 0.5625 are:
 ], caption: "Standardní výstup v konzoli")
 
 Z výpisu algoritmu jsem zpozoroval,
-že maximalní hodnota, kterou $p$ může nabývat, je $9/16$ neboli $0.5625$. 
-Také jsem zjístil o jaké konfigurace kostek, 
-které splňuji dané podmínky, se přesně jedná.
-Dvě z nich (s indexy 0 a 3) dokonce odpovídají konfiguraci ve slovním zadání,
-neberu-li v potaz označení kostek.
+že maximální hodnota, kterou $p$ může nabývat, je $9/16$ neboli $0.5625$. 
+Také jsem zjistil o jaké konfigurace kostek, 
+které splňují dané podmínky, se přesně jedná.
+Dvě z nich dokonce odpovídají konfiguraci ve slovním zadání,
+neberu-li v potaz označení kostek (index 0 a 3).
 
 
 

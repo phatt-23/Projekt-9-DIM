@@ -6,7 +6,7 @@
 V této práci se zaměřuji
 na dvě konkrétní úlohy. 
 První úloha pojednává o
-na kombinatorických vlastnostech
+kombinatorických vlastnostech
 netranzitivních kostek, které 
 vykazují překvapivé neintuitivní 
 pravděpodobnostní vztahy.
@@ -27,5 +27,5 @@ V části teorie grafů se pak
 zabývám důkazem existence 
 faktoru s lichými stupněmi 
 ve stromech se 
-sudým počtem vrchlů.
+sudým počtem vrcholů.
 Dokážu také jednoznačnost tohoto faktoru.

@@ -15,7 +15,7 @@
 
 Mějme strom $T$ se sudým počtem vrcholů (je sudého řádu).
 Cílem je ukázat, že pro $T$ existuje faktor $F$, kde všechny 
-vrcholy grafu $F$ jsou lichého stupně (budeme nazývat jako lichý faktor).
+vrcholy grafu $F$ jsou lichého stupně (lichý faktor).
 
 // #include "./existence_1.typ"
 #include "./existence_2.typ"
