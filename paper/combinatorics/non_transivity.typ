@@ -76,16 +76,16 @@ je vyšší než $50%$. To znamená, že kostka $B$ je lepší než $A$.
   *Druhá varianta řešení*
 ]
 
-Pravděpodobnostní prostorem je stále $Omega = B times A$.
+Pravděpodobnostním prostorem je stále $Omega = B times A$.
 Využijeme toho, že se kostky skládají
 ze dvou různých čísel.
 Pokud hodnota kostky $A$ je 1, 
-tak kostka $B$ vyhraje vždy a to 
+pak kostka $B$ vyhraje vždy a to 
 bez ohledu na její vrženou hodnotu.
 Pokud padla na kostce $A$ hodnota 4, 
-tak $B$ vyhraje pouze tehdy, 
+pak $B$ vyhraje pouze tehdy, 
 když bude vržena hodnota $5$.
-To zapišeme a vypočítáme následně.
+To zapišeme a vypočítáme následovně:
 
 $
   P(B > A) &= (P(A=1) dot P(B>A=1) dot |Omega| 

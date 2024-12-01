@@ -18,14 +18,14 @@ a hledáním jednoznačného faktoru
 s lichými stupni vrcholů. 
 
 Kombinatorická část práce se zabývá 
-výpočty pravděpodobností mezi kostkami,
-rozmístěními čísel na kostkách
+výpočty pravděpodobností výher mezi kostkami,
+rozmístěními čísel na čtyřstenných kostkách
 a maximalizací pravděpodobnostní 
 hranice při splnění daných podmínek. 
 
 V části teorie grafů se pak 
 zabývám důkazem existence 
-faktoru s lichými stupněmi 
+faktoru s lichými stupni 
 ve stromech se 
 sudým počtem vrcholů.
 Dokážu také jednoznačnost tohoto faktoru.

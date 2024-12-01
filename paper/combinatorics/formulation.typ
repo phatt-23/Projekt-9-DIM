@@ -15,8 +15,10 @@ Když jsou kostky vrženy současně,
 pokud pravděpodobnost, 
 že hodnota na kostce $X$ bude vyšší 
 než hodnota na kostce $Y$, je větší než $50%$.
+
+
 Tuto skutečnost zapíšeme jako $X>Y$.
-Pravděpodobnost výhry kostky $X$ nad kostkou $Y$
+Pravděpodobnost výhry kostky~$X$ nad kostkou~$Y$
 označíme potom jako $P(X > Y)$.
 
 Úlohy jsou následující:
