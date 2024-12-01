@@ -3,7 +3,7 @@
 
 Cílem této části je analyzovat vlastnosti tří čtyřstěnných kostek 
 $A$, $B$ a $C$ a ukázat, že vykazují netranzitivní chování. 
-To znamená, že pravděpodobnosti výhry při "souboji" mezi 
+To znamená, že pravděpodobnosti výher při "soubojích" mezi 
 jednotlivými kostkami splňují vztahy:
 $
   &P(B > A) > 0.5 \
@@ -11,17 +11,17 @@ $
   &P(A > C) > 0.5
 $
 
-Pro každý pár kostek $X$ a $Y$ definujeme pravděpodobnost $P(X > Y)$ 
+Pro každý pár kostek $X$ a $Y$ definujeme $P(X > Y)$ 
 jako pravděpodobnost, že při hodu kostkami $X$ a $Y$ padne na kostce $X$ vyšší číslo než na kostce $Y$. 
 
 Každá kostka má čtyři stěny, takže celkový 
 počet možných kombinací výsledků
 při "souboji" dvou kostek je $4 dot 4 = 16$, 
 což odpovídá mohutnosti množiny
-kartezského součinu $X times Y$ kostek $X$ a $Y$.
-Pravděpodobnost se vypočítá jako podíl 
+kartezského součinu $X times Y$ čísel kostek $X$ a $Y$.
+Pravděpodobnost $P(X > Y)$ se vypočítá jako podíl 
 počtu případů, kdy padlé číslo na kostce X 
-je větší než číslo na kostce Y  
+je větší než číslo na kostce Y,
 a celkového počtu možných kombinací výsledků.
 $
   P(X > Y) &= (lr(|{ (x,y) in X times Y : x > y }|, size: #150%))/(|X times Y|)
@@ -39,8 +39,8 @@ $P(B > A)$, $P(C > B)$ a $P(A > C)$.
 #heading(outlined: false, offset: 3, numbering: none)[
   *První varianta řešení*
 ]
-Pravděpodobnostní prostor $Omega$
-je kartezský součin čísel na kostkách $B$ a $A$:
+Pravděpodobnostním prostorem $Omega$
+je kartezský součin čísel kostek $B$ a $A$:
 // The sample space $Omega$ is every combination of B's numbers with A's numbers.
 
 $
@@ -61,7 +61,7 @@ $
 // Velikost pravděpodobnostního prostoru je $|Omega| = 16$. 
 Z rozepsané $Omega$ vidíme, že
 počet případů, kdy kostka $B$ vyhraje 
-nad $A$ je vyšší (10) než počet, kdy prohraje (6).
+nad kostkou $A$ je vyšší (10) než počet, kdy prohraje (6).
 Pravděpodobnost vypočteme jako:
 $
   P(B > A) = (2 + 4 dot 2)/(|Omega|) 
@@ -69,7 +69,7 @@ $
 $
 
 Vidíme, že pravděpodobnost výhry kostky $B$ nad kostkou $A$
-je vyšší než $50%$. To znamená, že kostka $B$ je lepší než $A$.
+je vyšší než $50%$. To znamená, že kostka $B$ je lepší než kostka $A$.
 #h(1fr) $ballot$
 
 #heading(outlined: false, offset: 3, numbering: none)[
@@ -79,7 +79,7 @@ je vyšší než $50%$. To znamená, že kostka $B$ je lepší než $A$.
 Pravděpodobnostním prostorem je stále $Omega = B times A$.
 Využijeme toho, že se kostky skládají
 ze dvou různých čísel.
-Pokud hodnota kostky $A$ je 1, 
+Pokud padlá hodnota kostky $A$ je 1, 
 pak kostka $B$ vyhraje vždy a to 
 bez ohledu na její vrženou hodnotu.
 Pokud padla na kostce $A$ hodnota 4, 
@@ -105,7 +105,7 @@ $
 Protože $P(B > A) = 5/8 > 1/2$, je kostka $B$ lepší než kostka $A$. #h(1fr) $ballot$
 
 Zbývalé pravděpodobnosti $P(C > B)$ a $P(A > C)$ 
-bychom mohli vypočítat obdobně jako $P(B > A)$.
+bychom mohli vypočítat obdobně.
 Lze to ale udělat lépe?
 Všiměte si @eqt:notice-this-prob-equation.
 Její tvar můžeme využitím 
@@ -114,7 +114,7 @@ zákonu celkové pravděpodobnosti
   Wikipedia, _Law of total probability_: 
   #link("https://en.wikipedia.org/wiki/Law_of_total_probability")
 ] 
-zobecnit.
+výpočet pro zbylé vztahy zobecnit.
 
 
 
@@ -122,8 +122,8 @@ zobecnit.
 === Výpočet pomocí zákonu celkové pravděpodobnosti 
 Zákon celkové pravděpodobnosti uvádí, 
 že mame-li událost $E$, která závisí 
-na známých podmínkách, tak její pravděpodobnost 
-lze vyjádřit jako:
+na známých podmínkách $C_1, C_2,..., C_n$, 
+tak lze její pravděpodobnost vyjádřit jako:
 $
   P(E) = sum_(i=0)^n P(C_i) dot P(E|C_i)
 $
@@ -135,8 +135,8 @@ $
 
 #pagebreak()
 
-Zkoumanými událostmi jsou v našem případě  $X > Y$ (kostka $X$ vyhraje nad kostkou $Y$).
-Disjunktní podmínky $C_i$ odpovídají výsledkům hodů kostky $Y$,
+Zkoumanými událostmi jsou v našem případě  $X > Y$ (kostka $X$ vyhraje nad kostkou~$Y$).
+Disjunktním podmínkám $C_i$ odpovídají výsledky hodů kostky $Y$,
 která může nabývat hodnot $y_0, y_1, ..., y_n$.
 Podmínky $Y=y_i$ jsou disjunktní, protože platí:
 $
@@ -144,7 +144,7 @@ $
   "  a  " (Y=y_i) sect (Y=y_j) = emptyset " pro " i eq.not j
 $
 Padne-li na kostce $Y$ např. 1 nemůže zároveň padnout 3 nebo 5 apod.
-Obecný vzorec pro výpočet pravděpodobnosti $P(X>Y)$ je:
+Obecný vzorec pro výpočet pravděpodobnosti $P(X>Y)$ tedy je:
 $
   P(X > Y) = sum_(y in Y) P(Y = y) dot P(X > y)
 $
@@ -167,7 +167,7 @@ $
 
 $
   P(C > B) &= sum_(b in B) P(B = b) dot P(C > b) \
-    &= P(B=2) dot P(C>2) + P(C=5) dot P(C>5)  \
+    &= P(B=2) dot P(C>2) + P(B=5) dot P(C>5)  \
     &= 1/2 dot 4/4 + 1/2 dot 1/4 \
     &= 4/8 + 1/8 = 5/8 = underline(underline(0.625))\
 $

@@ -4,6 +4,9 @@
 #import "@preview/alchemist:0.1.2": *
 #import "@preview/codly:1.0.0": *
 #import "@preview/note-me:0.3.0": *
+#import "@preview/cetz:0.3.1"
+
+
 
 // Figures
 #show heading: i-figured.reset-counters.with(extra-kinds: ("atom",))

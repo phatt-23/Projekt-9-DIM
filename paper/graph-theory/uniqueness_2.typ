@@ -4,14 +4,16 @@
 #import "@preview/alchemist:0.1.2": *
 #import "@preview/codly:1.0.0": *
 #import "@preview/note-me:0.3.0": *
+#import "@preview/cetz:0.3.1"
+#import "@preview/cetz-venn:0.1.1"
 
 
 == Důkaz jednoznačnosti faktoru $F$
 
-Po odůvodnění existence faktoru $F$ nyní dokážeme, 
-že v stromu $T$ existuje právě jeden takový faktor $F$, 
-ve kterém mají všechny jeho vrcholy lichý stupeň.
 
+Po odůvodnění existence faktoru $F$ nyní dokážeme, 
+že pro strom $T$ existuje právě jeden takový faktor $F$, 
+ve kterém mají všechny jeho vrcholy lichý stupeň.
 
 
 #heading(outlined: false, offset: 2, numbering: none)[
@@ -20,10 +22,10 @@ ve kterém mají všechny jeho vrcholy lichý stupeň.
 
 Předpokladejme, že existují dva různé liché 
 faktory stromu $T$.
-Mějme faktory $F_A, F_B$, o~kterých tvrdíme, 
+Mějme faktory $F_A$ a $F_B$, o~kterých tvrdíme, 
 že jsou od sebe odlišné. Tedy musí platit,
-že mají alespoň jednu hranu, která náleží 
-pouze jim ale ne druhému.
+že jedna z nich má alespoň jednu hranu, která náleží 
+pouze jim ale ne druhému:
 $
   exists e in E(F_A), e in.not E(F_B)
 $
@@ -31,7 +33,7 @@ $
  
 Vytvoříme nový graf $G$. 
 Ten obsahuje všechny vrcholy stromu $T$
-a hrany, které jsou symetrickým rozdílem hran faktorů
+a hrany symetrického rozdílu hran faktorů
 $F_A$ a $F_B$.
 To znamená, že $G$ obsahuje ty hrany, které se objevují
 právě v jednom z faktorů, nikoliv v obou.
@@ -39,11 +41,11 @@ $
   G = lr((V(T), E(F_A) xor E(F_B)), size: #150%)
 $
 
-Pokud je graf $G$ nulovým grafem (což znamená, že nemá žádné hrany):
+Pokud je graf $G$ nulovým grafem (nemá žádné hrany):
 $
   G = lr((V(T), emptyset), size: #150%)
 $
-potom platí, že $E(F_A) = E(F_B)$, což vede k závěru, 
+pak platí, že $E(F_A) = E(F_B)$, což vede k závěru, 
 že faktory $F_A$ a $F_B$ popisují tentýž graf.
 
 
@@ -53,9 +55,9 @@ potom platí, že $E(F_A) = E(F_B)$, což vede k závěru,
   Sudost a lichost stupní vrcholů $v in V(G)$
 ]
 
-Sudost a lichost stupně vrcholů v grafu $G$ závisí na tom, 
+Sudost a lichost stupní vrcholů v grafu $G$ závisí na tom, 
 kolik hran z faktorů $F_A$ a $F_B$ budou zahrnuty do vysledného grafu $G$.
-Množinu hran faktoru $F_X$, které jsou incidentní s vrcholem $v$ zapíšeme:
+Množinu hran faktoru $F_X$, které jsou incidentní s vrcholem $v$ zapišme jako:
 $
   E_(v) (F_X)
 $
@@ -93,7 +95,7 @@ Při symetrickém rozdílu hran faktorů $F_A$ a $F_B$, mohou nastat tyto příp
       E(F_A) sect E(F_B) eq.not emptyset
     $
     pak jsou všechny vrcholy grafu $G$ také sudého stupně,
-    což lze dokázat. Nejdříve si však zjednodušme syntaxi
+    což nyní dokážeme. Nejdříve si však zjednodušme syntaxi
     touto substitucí: 
     $
       A = E_v (F_A) \
@@ -146,7 +148,7 @@ Cesty jsou cyklické, zatímco stromy jsou acyklické - je zde kontradikce.
 Nemůžeme z acyklického stromu získat cyklický graf.
 
 Tedy jedinou přípustnou možností je, 
-že fakory $F_A$ a $F_B$ popisují jeden a ten samý graf.
+že $k=0$ a fakory $F_A$ a $F_B$ popisují jeden a ten samý graf.
 Jednoznačnost faktoru $F$ je dokázána.
 #h(1fr) $ballot$
 

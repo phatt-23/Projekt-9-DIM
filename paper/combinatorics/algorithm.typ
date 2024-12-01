@@ -7,7 +7,7 @@
 #import "@preview/codelst:2.0.2": sourcecode
 
 == Sestavení algoritmu
-Cílem je maximalizovat $p$ tak, aby současně platily:
+Cílem je maximalizovat parametr $p$ tak, aby současně platily:
 $
   cases(
     P(B > A) space &>= space p,
@@ -46,7 +46,10 @@ Celý zdrojový kód naleznete
   Nejprve se vygenerují všechny číselné kombinace kostky.
   K vygenerovaní těchto kombinací jsem si napsal 
   pomocnou funkci ```rust fn generate_dice```, ve které volám funkci
-  ```rust fn combinations_with_replacement``` z knihovny `itertools`.
+  ```rust fn combinations_with_replacement``` z knihovny `itertools`
+  #footnote[
+    Knihovna _itertools_ napsaná v jazyce Rust: #link("https://crates.io/crates/itertools")
+  ].
 
   #figure([
     #sourcecode[```rust
@@ -58,31 +61,10 @@ Celý zdrojový kód naleznete
 
 ]
 
-+ #[
-  Vypočítání pravděpodobnosti $P(X > Y)$ zajišťuje následující funkce:
 
-  #figure([
-    #sourcecode[```rust
-    fn pairwise_probability(x: &[usize], y: &[usize]) -> f64 {
-        let mut wins = 0;             // Count the number of pairs where x > y
-        for &xi in x.iter() {         // Loop through each element in x and y
-            for &yi in y.iter() {
-                if xi > yi {
-                    wins += 1;        // Increment wins if xi is greater than yi
-                }
-            }
-        }
-        let omega = (x.len() * y.len()) as f64; // Size of the probability space
-        wins as f64 / omega                     // Return computed probability
-    }
-    ```]
-  ], caption: [Funkce ```rust fn pairwise_probability```])
-
-]
-
-+ #[
+2. #[
   Použitím tří vnořených cyklů se 
-  prověří, jestli pro stávající $p$ platí, že 
+  prověří, jestli stávající $p$ splňuje 
   $P(B > A) >= p$, \ $P(C > B) >= p$ a $P(A > C) > p$
   pro některou z kombinací kostek $A$, $B$ a $C$.
   #figure([
@@ -90,10 +72,13 @@ Celý zdrojový kód naleznete
     for a in &dice {          // Check all combinations of A, B, C
         for b in &dice {
             for c in &dice {
-                if pairwise_probability(b, a) >= p    // P(B > A) >= p
-                  && pairwise_probability(c, b) >= p  // P(C > B) >= p
-                  && pairwise_probability(a, c) > p   // P(A > C) >  p
-                { /* ... do something */ }
+                let ba = pairwise_probability(b, a);   // P(B > A)
+                let cb = pairwise_probability(c, b);   // P(C > B)
+                let ac = pairwise_probability(a, c);   // P(A > C) 
+
+                if ba >= p && cb >= p && ac > p { 
+                    /* ... do something */ 
+                }
             }
         }
     }
@@ -101,6 +86,29 @@ Celý zdrojový kód naleznete
   ], caption: [Kód na prověřování podmínek])
 ]
 
+#pagebreak()
+
+3. #[
+  Výpočet pravděpodobnosti $P(X > Y)$ zajišťuje následující funkce:
+
+  #figure([
+    #sourcecode[```rust
+    fn pairwise_probability(x: &[usize], y: &[usize]) -> f64 {
+        let mut wins = 0;             // Count the number of winning cases
+        for &xi in x.iter() {         // Loop through each pair of x and y
+            for &yi in y.iter() {
+                if xi > yi {          // If xi is greater than yi
+                    wins += 1;        // increment the number of wins 
+                }
+            }
+        }
+        let omega = (x.len() * y.len()) as f64; // Size of the probability space
+        wins as f64 / omega                     // Return probability
+    }
+    ```]
+  ], caption: [Funkce ```rust fn pairwise_probability```])
+
+]
 // #pagebreak()
 
 #heading(outlined: false, offset: 2, numbering: none)[
@@ -134,7 +142,7 @@ Celý algoritmus (jeho naivní varianta) je zde:
                       if ba >= p && cb >= p && ac >= p { // Check them against p
                           valid = true; // This p has a valid configuration
                           println!("A={:?}, B={:?}, C={:?}", a, b, c);
-                          break 'outer; // Jump out of loops (to the 'outer tag)
+                          break 'outer; // Break out from the 3-nested loops
                       }
                   }
               }
@@ -145,21 +153,21 @@ Celý algoritmus (jeho naivní varianta) je zde:
               return max_p;                         
           }
 
-          max_p = p; // If configuration exists assign to max_p
+          max_p = p; // If configuration exists assign p to max_p
       }
-      max_p          // By default return max_p found
+      max_p          // By default return max_p
   }
   ```]
 ], caption: [Naivní varianta funkce ```rust fn find_max_p```])
 
 Tato naivní varianta algoritmu je velmi neefektivní, 
-neboť opakovaně počítá pravděpodobnosti mezi týmiž kostkami.
+neboť opakovaně počítá pravděpodobnosti mezi týmiž konfiguracemi kostek.
 V důsledku je alogitmus znatelně pomalý.
 
 Je zřejmé, že by algoritmu přispělo 
-prvně předpočítat pravděpodobnosti všech 
-kombinací dvou kostek.
-Vypočtené hodnoty se uloží do matice (pole polí). 
+prvně pravděpodobnosti všech 
+kombinací dvou kostek předpočítat.
+Vypočtené hodnoty se uloží do matice (resp. pole polí). 
 Konkrétně se použije dynamické pole ```Rust Vec<T>``` 
 ze standardní knihovny jazyka Rust.
 
@@ -201,7 +209,7 @@ a využil ji v upravené funkci pro hledaní maximální hodnoty $p$:
 )
   #sourcecode[```rust
   fn find_max_p_caching_vec(side_count: usize) -> f64 {
-      // ... (identical with the previous)
+      // ... (identical with the naive variant)
       let cache = precompute_probabilities_vec(&dice);  // <-- precomputing
 
       for step in 1..=16 {
@@ -229,17 +237,15 @@ a využil ji v upravené funkci pro hledaní maximální hodnoty $p$:
 
           max_p = p;
       }
-      // ... (identical with the previous)
+      max_p
   }
   ```]
 ], caption: [Rychlejší varianta ```rust fn find_max_p``` s předpočítanými hodnotami])
 
-Verze s předpočítanými hodnotami pravděpodobností výrazně zrychluje celý proces.
-Díky tomu, že místo opakovaného výpočtu pravděpodobnosti pro každý pár kostek mezi 
+Verze s předpočítanými hodnotami pravděpodobností výrazně zrychluje celý proces
+a to díky tomu, že místo opakovaného výpočtu pravděpodobnosti pro každý pár kostek mezi 
 každým cyklem, máme uložené hodnoty v matici, což zrychlí nalezení pravěpodobnosti 
 $P(X > Y)$ na konstantní čas $O(1)$.
-
-#pagebreak()
 
 Posledně jsem droubnou úpravou cyklů algoritmus paralelizoval: 
 
@@ -250,7 +256,7 @@ Posledně jsem droubnou úpravou cyklů algoritmus paralelizoval:
 ))
   #sourcecode[```rust
   fn find_max_p_parallel(side_count: usize) -> f64 {
-      // ... (identical with the previous)
+      // ... (identical with the previous variant)
       
       for step in 1..=16 {
           let p = step as f64 * increment;
@@ -275,7 +281,7 @@ Posledně jsem droubnou úpravou cyklů algoritmus paralelizoval:
           max_p = p;
       }
 
-      // ... (identical with the previous)
+      max_p
   }
   ```]
 ], caption: [Paralení varianta funkce ```rust fn find_max_p```])
@@ -310,8 +316,8 @@ Z výpisu algoritmu jsem zpozoroval,
 že maximální hodnota, kterou $p$ může nabývat, je $9/16$ neboli $0.5625$. 
 Také jsem zjistil o jaké konfigurace kostek, 
 které splňují dané podmínky, se přesně jedná.
-Dvě z nich dokonce odpovídají konfiguraci ve slovním zadání,
-neberu-li v potaz označení kostek (index 0 a 3).
+Dvě z nich dokonce odpovídají konfiguraci ve slovním zadání (index~0~a~3),
+neberu-li v potaz označení kostek.
 
 
 

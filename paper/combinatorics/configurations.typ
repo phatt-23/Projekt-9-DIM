@@ -9,11 +9,11 @@
 
 Kostky $A$, $B$ a $C$ jsou rozlišitelné (například mají odlišné barvy).
 Zajímá nás, 
-jaký je počet různých konfigurací čísel, 
-pokud vybíráme čísla z množiny
-z množiny $[1,6]$ s možností opakovaní.
+jaký je počet 
+různých konfigurací čísel na kostkách,
+za předpokladu, že čísla vybíráme z množiny $[1,6]$ s možností opakovaní.
 
-Počet způsobů, jak vybrat čtyři čísla z sešti (s možností opakování), je:
+Počet různých způsobů, jak vybrat čtyři čísla z sešti (s možností opakování), je:
 $
   C^*(6,4) = binom(9,4) = 126
 $
@@ -45,12 +45,12 @@ Vysvětlení členů:
   enum.item(2)[
     _Vybereme tři čísla z šesti možných._ \
     Zvolíme dvě pozice ze tří, kam umístit dva oddělovače mezi čtyřmi stěnami. 
-    Vzniklé tři přehrádky naplníme těmito čísly.
+    Vzniklé tři přehrádky naplníme těmito třemi čísly.
   ],
   enum.item(3)[
     _Vybereme dvě čísla z šesti možných._ \
     Zvolíme jednu ze tří pozic, kam umístíme jeden oddělovač. 
-    Vzniklé dvě přehrádky naplníme těmito čísly.
+    Vzniklé dvě přehrádky naplníme těmito dvěma čísly.
   ],
   enum.item(4)[
     _Vybereme jedno číslo z šesti možných._ \
@@ -61,7 +61,7 @@ Vysvětlení členů:
 #pagebreak()
 
 #heading(outlined: false, offset: 2, numbering: none)[
-  Enantiomorfy kostek
+  Zrcadlové obrazy kostek 
 ]
 
 Výpočet konfigurací podle @eqt:computation-of-configurations-extended platí 
@@ -69,7 +69,7 @@ pouze za předpokladu, nebereme-li v úvahu různá rozmístění pevně zvolen�
 čísel na kostce. Pokud máme 4 různá čísla, lze je na čtyřstěnnou 
 kostku rozmístit dvěma různými způsoby, neboť každá konfigurace má svůj 
 zrcadlový obraz, který s ní není totožný. 
-Tento obraz se nazývá tvz. jako chirální enantiomorf 
+Tomuto obrazu se mj. říká chirální enantiomorf 
 #footnote[
   Wikipedia, _Chiralita_: #link("https://cs.wikipedia.org/wiki/Chiralita")
 ]. 
@@ -143,5 +143,5 @@ $
   = 30 + 60 + 45 + 6 = underline(141)
 $
 
-Pro tři kostky tedy bude možných konfigurací:
-$ (141)^3 = underline(underline(2803221)) $
+Pro rozlišitelné tři kostky by tedy bylo možných konfigurací:
+$ 141^3 = underline(underline(2803221)) $

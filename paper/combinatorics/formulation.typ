@@ -12,9 +12,9 @@ $
 Zvolme si dvě kostky $X$, $Y$ a hoďme s nimi.
 Když jsou kostky vrženy současně, 
 řekneme, že kostka $X$ je lepší než kostka $Y$,
-pokud pravděpodobnost, 
-že hodnota na kostce $X$ bude vyšší 
-než hodnota na kostce $Y$, je větší než $50%$.
+pokud je pravděpodobnost, 
+že padlá hodnota na kostce $X$ bude vyšší 
+než hodnota na kostce $Y$, vyšší než $50%$.
 
 
 Tuto skutečnost zapíšeme jako $X>Y$.
@@ -56,7 +56,7 @@ označíme potom jako $P(X > Y)$.
 
   Poslední úloha spočívá v nalezení 
   největší hodnoty parametru $p$ při volné 
-  konfiguraci čísel na kostkách (dle druhé úlohy),
+  konfiguraci čísel na kostkách (dle úlohy 2),
   přičemž parametr $p$ musí splňovat:
 
   $
