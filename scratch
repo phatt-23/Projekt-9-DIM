@@ -1,0 +1,231 @@
+number of edges in a tree with n nodes is n-1.
+
+since every 2(k - 1) is the sum of the degrees, each edge contributes to 2 to the degree count, becuase it has two exactly two incident edges.
+
+the sum is always even. 
+
+assume there is a graph with exactly one even degree. this would mean that all other degrees must be odd.
+in a graph with even amount of vertices, it is impossible for such case to happen.
+it would mean that there is 1 even number and n-2 odd number, where we know that n % 2 = 0,
+and then the sum would be odd (impossible).
+
+the implication of which is that there must be an even amount of odd and even degrees.
+if there is 0 even degrees, the tree is its own odd factor.
+
+(4 3 3 1 1 1) sum is odd
+
+if we had
+
+-----------------------------------------------------------------------
+
+
+We have a graph T which is a tree of even amount of vertices.
+Prove that T has exactly one odd subgraph F.
+
+Suppose that the amount of odd subgraphs of T is different to one.
+There could be zero or two and more.
+
+The tree with even amount of vertices can always
+
+(1,1,1,1,1,1)
+
+Every tree has a degree sequence consisting of at least two odd numbers.
+This is given by the Handshaking Theorem which states that for every
+graph G, the following must be true:
+
+sum_(v in V(G)) deg(v) = 2*|E(G)|
+
+For a tree, since a tree with n vertices must have exactly n-1 edges, 
+this priciple would boil down to:
+
+sum_(v in V(G)) deg(v) = 2*(n-1)
+
+The minimal degree a vertex $v$ can have in a tree is 1.
+This would implicate that $v$ is a leaf 
+(has no children, might be wrong on the terminology).
+Then the degree sequence of a tree must not consist of
+a single 0.
+
+Analogy:
+    We have 2*(n-1) = 2n-2 objects
+    we had to put into n baskets.
+    Each basket has to have at 
+    least one object.
+    After we put one object in every basket,
+    it leaving us with n-2 objects.
+    We are free to distribute these objects
+    into there $n$ basktets however we like.
+    It is impossible for all baskets 
+    have more than one object
+    since we have only n-2 objects
+    left.
+
+
+
+--------------------------------------------------------------------------------
+Given a tree T of even order proove that a spanning subgraph F exists 
+and is the only spanning subgraph.
+
+By induction on number of vertices.
+
+    |V(T)| = n
+
+Dont take into account graph with 0 vertices.
+For n=2 it is clear that it is its own spanning subgraph.
+Assume n>2.
+
+Let v be a vertex which is not a leaf (since n>2 it exists).
+Let A_1, A_2, ..., A_k be components of T-{v}.
+Let e_i, be the edge joining v to A_i.
+Let S = {i : |V(A_i)| is even}
+    R = {i : |V(A_i)| is odd}.
+
+Since n is even, |R| must be odd.
+S = {even, even, ..., even}
+R = {odd, odd, ..., odd}
+
+sum of S is even
+sum of R is odd
+(sum of S) + (sum of R) = odd
+(sum of S) + (sum of R) + (1 for vertex v) = even 
+
+No tree of odd order can have an odd spanning subgraph.
+Proof is here:
+
+    odd order = n is odd
+    sum (d_1, d_2, ..., d_(odd)) = must be even
+
+    If (d_1, d_2, ..., d_(odd)) where d_i is odd,
+    then:
+        d_1 + d_2 + ... + d_(odd) =
+        = (odd times) * (odd) = odd
+
+        => violates the Handshaking Theorem
+
+Let H_i, i in S be spanning subgraph of A_i.
+(
+    A_i is in S, so it is even, 
+    it is also smaller than T,
+    we can use the induction step
+    if |A_i| = 2, it is its own odd spanning subgraph.
+    if |A_i| >= 4, recurese down to 2.
+)
+Let G_i, i in R be a spanning subgraph of A_i + e_i + (v).
+(
+    A_i + e_i + v is even,
+    its also smaller than T because deg(v) > 1,
+    that's the reason why we chose v as a non-leaf vertex.
+    apply the induction step
+    if |V(A_i + e_i + v)| = 2
+)
+Let G = union_(i in S) H_i union union_(i in R) G_i.
+Each G_i contains the edge e_i,
+because otherwise G_i would be 
+an odd spanning subgraph of A_i in R,
+which is impossible, since forall A_i in R 
+there cannot exist any subgraph with all odd degrees.
+Therefore G is a spanning subgraph and forall v in V(G), deg(v) is odd.
+deg(v) = |Q| = odd
+
+-------------------------------------------------------------------------------
+For tree T of even order, there exists an odd spanning subgraph.
+Since |V(T)| is even then it must have even amount of odd degreed vertices.
+
+    n = |V(T)|
+    (d_1, d_2, ..., d_n)
+
+    if there are odd amount of d_i that are odd
+
+    (odd, odd, even, even, odd)
+    3 * odd + 2 * even = odd (violates the Handshaking Theorem)
+    
+    => there must be even amount of odd degreed vertices
+
+If all degrees are odd, done we found an odd spanning subgraph of T.
+
+If not all degrees are odd, then 
+there are 
+even amount of even degrees and 
+even amount of odd degrees.
+
+For all possible graphs of even order we can construct their degree sequence:
+E.g.:
+(even, odd, even, even, odd, even, odd, odd)
+
+We can decrement these degrees by pairs 
+(since one edge is incident with two vertices)
+until we get an odd sequence, that is when we stop.
+
+Note that degrees of 1 cannot be decremented.
+These degrees corresponds to the degrees of leaves,
+whose incident edges must be in the final spanning subgraph.
+If we removed these edges, the leaves would be of degree zero (is not odd),
+which means there cant be any zero in the sequence.
+
+No matter which way we do this subtraction, 
+it is guaranted that one of the resulting sequences 
+is the sequence of the odd spanning subgraph of T.
+
+We will always be able to do this decrementing,
+because there is even number of odd and even degrees.
+
+    (odd - 1 = even, odd - 1 = even)
+    (even - 1 = odd, even - 1 = odd)
+    (odd - 1 = even, even - 1 = odd)
+    (even - 1 = odd, odd - 1 = even)
+
+After any decrementation, 
+the fact that there is even number of odd and even degrees
+doesnt change (the Handshaking Theorem isnt violated).
+
+Thus we have proven there must exist an odd spanning subgraph of T.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MSBuild version 17.8.5+b5265ef37 for .NET
+  Determining projects to restore...
+  Restored /work/ObservableListLib/ObservableListLib.csproj (in 4.1 sec).
+  Restored /work/CustomerLib/CustomerLib.csproj (in 4.1 sec).
+  Restored /work/MainProgram/MainProgram.csproj (in 4.15 sec).
+/usr/lib/dotnet/sdk/8.0.110/Current/SolutionFile/ImportAfter/Microsoft.NET.Sdk.Solution.targets(36,5): warning NETSDK1194: The "--output" option isn't supported when building a solution. Specifying a solution-level output path results in all projects copying outputs to the same directory, which can lead to inconsistent builds. [/work/ObservableListLib.sln]
+/work/CustomerLib/Customer.cs(5,19): warning CS8618: Non-nullable property 'Name' must contain a non-null value when exiting constructor. Consider declaring the property as nullable. [/work/CustomerLib/CustomerLib.csproj]
+  ObservableListLib -> /work/ObservableListLib/bin/Release/net8.0/linux-x64/ObservableListLib.dll
+  CustomerLib -> /work/CustomerLib/bin/Release/net8.0/linux-x64/CustomerLib.dll
+  ObservableListLib -> /work/output/
+  CustomerLib -> /work/output/
+
